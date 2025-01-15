@@ -1,0 +1,17 @@
+{
+    "@@locale": "ru",
+    "welcomeToRedCrescent": "Добро пожаловать\nв Red Crescent",
+    "@welcomeToRedCrescent": {
+        "description": "Используется на главной странице"
+    },
+    "continueWord": "Продолжить",
+    "@continueWord": {},
+    "pressToAuth": "Нажмите для авторизации",
+    "signIn": "Войти",
+    "help": "Помощь",
+    "volunteers": "Волонтеры",
+    "leaderbord": "Лидерборд",
+    "statistics": "Статистика",
+    "tasks": "Задачи",
+    "profile": "Профиль"
+}
