@@ -20,7 +20,7 @@ class RedCrescent extends StatelessWidget {
         title: 'Red Crescent',
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        theme: ligthTheme,
+        theme: lightTheme,
         routerConfig: appRouter,
         builder: (context, child) {
           return GestureDetector(
