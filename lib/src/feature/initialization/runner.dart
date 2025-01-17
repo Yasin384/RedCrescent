@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:red_crescent/src/feature/app/widget/red_crescent.dart';
 import 'package:red_crescent/src/feature/auth/authorization/bloc/authorization_bloc.dart';
 import 'package:red_crescent/src/feature/auth/authorization/data/authorization_repository.dart';
+import 'package:red_crescent/src/feature/auth/authorization/widget/auth_redirect.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:stack_trace/stack_trace.dart';
@@ -109,7 +109,7 @@ abstract final class Runner {
                                 context),
                       ))
             ],
-            child: RedCrescent(),
+            child: AuthRedirect(),
           ),
         ),
       );

@@ -14,6 +14,8 @@ class LoginScreen extends StatelessWidget {
     super.key, // ignore: unused_element
   });
 
+  static const routePath = '/login';
+
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
