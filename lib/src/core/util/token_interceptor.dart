@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:red_crescent/src/core/constans/storage_key.dart';
+import 'package:red_crescent/src/core/model/access.dart';
 
 /// {@template token_interceptor}
 /// TokenInterceptor.
@@ -17,9 +18,9 @@ final class TokenInterceptor extends Interceptor {
     final access = await _flutterSecureStorage.read(key: StorageKey.access);
 
     if (access != null && access.isNotEmpty) {
-
-
+      options.data['Authorization'] = 'Bearer ${accessFromJson(access).access}';
+      handler.next(options);
     }
-    super.onRequest(options, handler);
+    handler.next(options);
   }
 }
