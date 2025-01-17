@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:red_crescent/src/core/theme/my_color.dart';
+import 'package:red_crescent/src/core/theme/red_crescent_icon.dart';
+import 'package:red_crescent/src/core/theme/sf_pro.dart';
 
 /// {@template shell_widget}
 /// ShellWidget widget.
@@ -9,7 +12,7 @@ class ShellWidget extends StatelessWidget {
   /// {@macro shell_widget}
   const ShellWidget({
     required this.shell,
-    super.key, // ignore: unused_element
+    super.key,
   });
 
   final StatefulNavigationShell shell;
@@ -17,10 +20,6 @@ class ShellWidget extends StatelessWidget {
   void _goBranch(int index) {
     shell.goBranch(
       index,
-      // A common pattern when using bottom navigation bars is to support
-      // navigating to the initial location when tapping the item that is
-      // already active. This example demonstrates how to support this behavior,
-      // using the initialLocation parameter of goBranch.
       initialLocation: index == shell.currentIndex,
     );
   }
@@ -28,22 +27,45 @@ class ShellWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final theme = Theme.of(context).extension<MyColor>();
+    final textTheme = Theme.of(context).extension<SfPro>();
+
     return Scaffold(
-      body: shell,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: shell,
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _goBranch,
         type: BottomNavigationBarType.fixed,
         currentIndex: shell.currentIndex,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.adb_outlined), label: l.leaderbord),
-          BottomNavigationBarItem(icon: Icon(Icons.abc), label: l.statistics),
-          BottomNavigationBarItem(icon: Icon(Icons.add_link), label: l.tasks),
-          BottomNavigationBarItem(icon: Icon(Icons.adb), label: l.profile),
+            icon: Icon(RedCrescentIcon.leaderBoardIcon),
+            label: l.leaderbord,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(RedCrescentIcon.statisticIcon),
+            label: l.statistics,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(RedCrescentIcon.tasksIcon),
+            label: l.tasks,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(RedCrescentIcon.profileIcon),
+            label: l.profile,
+          ),
         ],
-        
-        unselectedLabelStyle: TextStyle(fontSize: 8),
-        selectedLabelStyle: TextStyle(fontSize: 8),
+        selectedIconTheme: IconThemeData(color: theme?.red),
+        unselectedLabelStyle: textTheme?.s10W400,
+        selectedLabelStyle: textTheme?.s10W400,
+        selectedItemColor: theme?.red,
       ),
     );
   }

@@ -11,5 +11,6 @@ void main([List<String>? args]) => runZonedGuarded<Future<void>>(() async {
       Error.safeToString(error);
       stackTrace.toString();
 
-      logger.e('runZonedGuarded.onError', error: error, stackTrace: Chain.forTrace(stackTrace));
+      logger.e('runZonedGuarded.onError',
+          error: error, stackTrace: Chain.forTrace(stackTrace));
     });
