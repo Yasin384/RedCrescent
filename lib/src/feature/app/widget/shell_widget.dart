@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:red_crescent/src/core/theme/my_color.dart';
 import 'package:red_crescent/src/core/theme/red_crescent_icon.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
 
@@ -26,6 +27,8 @@ class ShellWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final theme = Theme.of(context).extension<MyColor>();
+    final textTheme = Theme.of(context).extension<SfPro>();
 
     return Scaffold(
       body: SafeArea(
@@ -59,8 +62,10 @@ class ShellWidget extends StatelessWidget {
             label: l.profile,
           ),
         ],
-        unselectedLabelStyle: const TextStyle(fontSize: 10),
-        selectedLabelStyle: const TextStyle(fontSize: 12),
+        selectedIconTheme: IconThemeData(color: theme?.red),
+        unselectedLabelStyle: textTheme?.s10W400,
+        selectedLabelStyle: textTheme?.s10W400,
+        selectedItemColor: theme?.red,
       ),
     );
   }
