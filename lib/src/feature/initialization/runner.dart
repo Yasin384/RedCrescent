@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:red_crescent/src/feature/app/widget/red_crescent.dart';
+import 'package:red_crescent/src/feature/auth/authorization/bloc/authorization_bloc.dart';
+import 'package:red_crescent/src/feature/auth/authorization/data/authorization_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:stack_trace/stack_trace.dart';
@@ -23,9 +26,9 @@ abstract final class Runner {
       ..deferFirstFrame();
     try {
       final prefs = SharedPreferences.getInstance();
+
       Bloc.observer = MyBlocObserver();
 
-      
       FlutterError.onError = (details) {
         FlutterError.presentError(details);
         logger.e(' FlutterError.onError',
@@ -77,12 +80,37 @@ abstract final class Runner {
                           }
                           // don't print responses with unit8 list data
                           return !args.isResponse || !args.hasUint8ListData;
-                        })
+                        }),
                   ],
                 ),
             ),
+
+            // --- Flutter secure storage --- //
+
+            RepositoryProvider(
+              create: (context) => FlutterSecureStorage(),
+            ),
+
+            // --- AuthorizationRepositoryImpl --- //
+
+            RepositoryProvider(
+                create: (context) => AuthorizationRepositoryImpl(
+                      flutterSecureStorage:
+                          RepositoryProvider.of<FlutterSecureStorage>(context),
+                    )..initAuthSession())
           ],
-          child: RedCrescent(),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  lazy: false,
+                  create: (context) => AuthorizationBloc(
+                        authorizationRepository:
+                            RepositoryProvider.of<AuthorizationRepository>(
+                                context),
+                      ))
+            ],
+            child: RedCrescent(),
+          ),
         ),
       );
     } on Object {
