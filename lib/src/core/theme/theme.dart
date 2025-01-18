@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:red_crescent/src/core/theme/my_color.dart';
+import 'package:red_crescent/src/core/theme/sf_pro.dart';
 
 final lightTheme = ThemeData(
   // --- Button stle start region. --- //
@@ -17,7 +18,10 @@ final lightTheme = ThemeData(
   extensions: [
     // --- Light Color  --- //
     _ligthColor,
+    _lightText,
   ],
 );
 
 final _ligthColor = MyColor.light();
+
+final _lightText = SfPro.light();

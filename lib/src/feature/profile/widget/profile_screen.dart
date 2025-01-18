@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meta/meta.dart';
+import 'package:red_crescent/src/core/router/auth/auth_router.dart';
+import 'package:red_crescent/src/core/widget/red_buton.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:red_crescent/src/feature/auth/authorization/data/authorization_repository.dart';
+import 'package:red_crescent/src/feature/auth/login/bloc/login_bloc.dart';
+import 'package:red_crescent/src/feature/auth/login/data/login_repository.dart';
+import 'package:red_crescent/src/feature/splash/widget/welcome_screen.dart';
 
 /// {@template profile_screen}
 /// ProfileScreen widget.
@@ -49,8 +58,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // Permanent removal of a tree stent
     super.dispose();
   }
+
   /* #endregion */
 
   @override
-  Widget build(BuildContext context) => const Placeholder();
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Scaffold(
+      body: BlocListener<LoginBloc, LoginState>(
+        listener: (context, state) {
+
+        },
+        child: Column(
+          children: [
+            Center(
+              child: RedButton(
+                title: l.getOut,
+                onPressed: () {
+                  context.read<LoginBloc>().add(LogoutRequested());
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

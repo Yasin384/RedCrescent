@@ -1,0 +1,131 @@
+
+API Документация
+
+Авторизация
+
+Вход
+POST https://redcresentt-production.up.railway.app/api/login/
+Описание: Получение JWT-токенов для авторизованного пользователя.
+Тело запроса:
+{
+  "username": "string",
+  "password": "string"
+}
+Ответ:
+- 200 OK:
+  {
+    "access": "JWT access token",
+    "refresh": "JWT refresh token",
+    "user": { /* Данные пользователя */ }
+  }
+- 401 Unauthorized: Неверные учетные данные.
+
+
+Пользователи
+
+Список пользователей
+GET https://redcresentt-production.up.railway.app/api/users/
+Описание: Получение списка всех пользователей.
+Требуется: Авторизация.
+
+Детали пользователя
+GET https://redcresentt-production.up.railway.app/api/users/{id}/
+Описание: Получение информации о конкретном пользователе.
+Требуется: Авторизация.
+
+Создание пользователя
+POST https://redcresentt-production.up.railway.app/api/users/
+Описание: Создание нового пользователя.
+Требуется: Авторизация.
+
+
+Текущий пользователь
+
+Информация о себе
+GET https://redcresentt-production.up.railway.app/api/me/
+Описание: Получение данных текущего авторизованного пользователя.
+Требуется: Авторизация.
+Ответ:
+- 200 OK: Данные пользователя.
+
+
+Задачи
+
+Список задач
+GET https://redcresentt-production.up.railway.app/api/tasks/
+Описание: Получение списка задач, доступных текущему пользователю.
+Требуется: Авторизация.
+
+Создание задачи
+POST https://redcresentt-production.up.railway.app/api/tasks/
+Описание: Создание новой задачи (только для координаторов и администраторов).
+Требуется: Авторизация.
+Пример тела запроса:
+{
+  "title": "string",
+  "description": "string",
+  "due_date": "YYYY-MM-DDTHH:MM:SSZ",
+  "hours_to_complete": "float",
+  "is_public": true
+}
+
+Участие в задаче
+POST https://redcresentt-production.up.railway.app/api/tasks/{id}/participate/
+Описание: Участие в задаче (для волонтеров).
+Требуется: Авторизация.
+Ответы:
+- 200 OK: Успешное участие.
+- 400 Bad Request: Ошибка (например, задача не доступна для участия).
+
+
+События
+
+Список событий
+GET https://redcresentt-production.up.railway.app/api/events/
+Описание: Получение списка событий, доступных текущему пользователю.
+Требуется: Авторизация.
+
+Создание события
+POST https://redcresentt-production.up.railway.app/api/events/
+Описание: Создание нового события (только для координаторов и администраторов).
+Требуется: Авторизация.
+Пример тела запроса:
+{
+  "title": "string",
+  "description": "string",
+  "date": "YYYY-MM-DDTHH:MM:SSZ",
+  "location": "string",
+  "is_public": true
+}
+
+Регистрация на событие
+POST https://redcresentt-production.up.railway.app/api/events/{id}/register/
+Описание: Регистрация пользователя на событие.
+Требуется: Авторизация.
+Ответы:
+- 200 OK: Успешная регистрация.
+- 400 Bad Request: Ошибка (например, уже зарегистрирован).
+
+
+Лидеры
+
+Рейтинг
+GET https://redcresentt-production.up.railway.app/api/leaderboard/
+Описание: Получение списка лидеров, отсортированных по количеству очков опыта.
+Требуется: Авторизация.
+
+
+Статистика
+
+Общая статистика
+GET https://redcresentt-production.up.railway.app/api/statistics/
+Описание: Получение общей статистики системы (только для координаторов и администраторов).
+Требуется: Авторизация.
+Ответ:
+{
+  "total_tasks": "int",
+  "completed_tasks": "int",
+  "total_events": "int",
+  "total_volunteers": "int",
+  "total_coordinators": "int"
+}

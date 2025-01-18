@@ -38,6 +38,8 @@ dependencies:
   # For using [ThemeExtension]
   theme_tailor_annotation: ^3.0.1
   flutter_svg: ^2.0.17
+  flutter_secure_storage: ^4.2.1
+  equatable: ^2.0.7
 
 dev_dependencies:
   flutter_test:

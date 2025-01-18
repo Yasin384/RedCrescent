@@ -3,8 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:red_crescent/src/feature/app/widget/shell_widget.dart';
 import 'package:red_crescent/src/feature/leaderboard/widget/leaderboard_screen.dart';
 import 'package:red_crescent/src/feature/profile/widget/profile_screen.dart';
-import 'package:red_crescent/src/feature/splash/widget/select_auth_type_screen.dart';
-import 'package:red_crescent/src/feature/splash/widget/welcome_screen.dart';
+
 import 'package:red_crescent/src/feature/statistics/widget/statistics_screen.dart';
 import 'package:red_crescent/src/feature/tasks/widget/tasks_screen.dart';
 
@@ -24,17 +23,6 @@ final appRouter = GoRouter(
     initialLocation: LeaderboardScreen.routePath,
     navigatorKey: _rootNavigatorKey,
     routes: [
-      GoRoute(
-          path: SelectAuthTypeScreen.routePath,
-          builder: (context, state) {
-            return SelectAuthTypeScreen();
-          }),
-      GoRoute(
-        path: WelcomeScreen.routePath,
-        builder: (context, state) {
-          return const WelcomeScreen();
-        },
-      ),
       StatefulShellRoute.indexedStack(
         pageBuilder: (context, state, shell) {
           return NoTransitionPage(

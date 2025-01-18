@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:red_crescent/src/core/constans/assets.dart';
 import 'package:red_crescent/src/core/widget/red_buton.dart';
+import 'package:red_crescent/src/feature/auth/login/widget/login_screen.dart';
 import 'package:red_crescent/src/feature/splash/widget/select_auth_type_screen.dart';
 
 /// {@template welcome_screen}
@@ -52,6 +53,6 @@ class WelcomeScreen extends StatelessWidget {
   }
 
   void _pushToRedirectAuthScreen(BuildContext context) {
-    context.push(SelectAuthTypeScreen.routePath);
+    context.push(LoginScreen.routePath);
   }
 }
