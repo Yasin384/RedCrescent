@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:red_crescent/src/core/theme/my_color.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
 
-final ligthTheme = ThemeData(
+final lightTheme = ThemeData(
   // --- Button stle start region. --- //
 
   filledButtonTheme: FilledButtonThemeData(
@@ -10,7 +10,8 @@ final ligthTheme = ThemeData(
     backgroundColor: WidgetStatePropertyAll(
       _ligthColor.red,
     ),
-  )),
+  ),
+  ),
 
   // --- Button stle end region. --- //
 
@@ -22,4 +23,5 @@ final ligthTheme = ThemeData(
 );
 
 final _ligthColor = MyColor.light();
+
 final _lightText = SfPro.light();
