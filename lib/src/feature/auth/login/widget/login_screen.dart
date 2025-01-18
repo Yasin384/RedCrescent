@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:red_crescent/src/core/constans/spacing.dart';
-import 'package:red_crescent/src/core/theme/my_color.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
 import 'package:red_crescent/src/core/widget/app_textfiled.dart';
 import 'package:red_crescent/src/core/widget/red_buton.dart';
@@ -69,23 +68,11 @@ class __LoginScreenState extends State<_LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final theme = Theme.of(context).extension<MyColor>()!;
+
     final textTheme = Theme.of(context).extension<SfPro>()!;
 
     return BlocConsumer<LoginBloc, LoginState>(
-      listener: (context, state) {
-        if(state is LoginError) {
-          CustomErrorDialog.show(
-            context: context,
-            error: state.loginException,
-            onRetry: () {
-              Navigator.of(context).pop();
-            },
-            onHelp: () {
-              Navigator.of(context).pop();
-            },
-          );        }
-      },
+      listener: _loginListener,
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
@@ -117,10 +104,7 @@ class __LoginScreenState extends State<_LoginScreen> {
                     RedButton(
                       isLoading: state.isLoginInProgress,
                       title: l.signIn,
-                      onPressed: () {
-                        print('jjjj');
-                        _singIn(context);
-                      },
+                      onPressed: () => _singIn(context),
                     ),
                     const SizedBox(height: 30),
                   ],
@@ -132,6 +116,22 @@ class __LoginScreenState extends State<_LoginScreen> {
       },
     );
   }
+
+  void _loginListener(BuildContext context, LoginState state) =>
+      (context, state) {
+        if (state is LoginError) {
+          CustomErrorDialog.show(
+            context: context,
+            error: state.loginException,
+            onRetry: () {
+              Navigator.of(context).pop();
+            },
+            onHelp: () {
+              Navigator.of(context).pop();
+            },
+          );
+        }
+      };
 
   void _singIn(BuildContext context) {
     context.read<LoginBloc>().add(

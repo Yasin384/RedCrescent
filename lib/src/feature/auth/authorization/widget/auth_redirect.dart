@@ -19,18 +19,16 @@ class AuthRedirect extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthorizationBloc, AuthorizationState>(
       builder: (context, state) {
-        final router =  switch (state) {
-          Authorized() => appRouter,
-          UnAuthorized() => authRouter,
-        };
         return MaterialApp.router(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          theme: ligthTheme,
-          routerConfig: router,
+          theme: lightTheme,
+          routerConfig: switch (state) {
+            Authorized() => appRouter,
+            UnAuthorized() => authRouter,
+          },
         );
       },
     );
   }
-
 }

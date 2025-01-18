@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:red_crescent/src/core/router/app_router.dart';
-import 'package:red_crescent/src/core/router/auth/auth_router.dart';
 import 'package:red_crescent/src/core/theme/theme.dart';
 
 /// {@template red_crescent}
