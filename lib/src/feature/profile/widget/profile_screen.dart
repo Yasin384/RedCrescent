@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
-import 'package:red_crescent/src/core/widget/red_buton.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:red_crescent/src/feature/auth/login/bloc/login_bloc.dart';
+import 'package:red_crescent/src/feature/auth/authorization/bloc/authorization_bloc.dart';
 
 /// {@template profile_screen}
 /// ProfileScreen widget.
@@ -16,18 +16,14 @@ class ProfileScreen extends StatefulWidget {
 
   static const routePath = '/profile';
 
-  /// The state from the closest instance of this class
-  /// that encloses the given context, if any.
-  @internal
-  static _ProfileScreenState? maybeOf(BuildContext context) =>
-      context.findAncestorStateOfType<_ProfileScreenState>();
-
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 /// State for widget ProfileScreen.
 class _ProfileScreenState extends State<ProfileScreen> {
+  late final Future<PackageInfo> packageInfo;
+
   /* #region Lifecycle */
   @override
   void initState() {
@@ -59,24 +55,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    return Scaffold(
-      body: BlocListener<LoginBloc, LoginState>(
-        listener: (context, state) {
-
-        },
-        child: Column(
+    final packageInfo = RepositoryProvider.of<PackageInfo>(context);
+    return BlocBuilder<AuthorizationBloc, AuthorizationState>(
+      builder: (context, state) {
+        final user = state.user!;
+        return Column(
           children: [
-            Center(
-              child: RedButton(
-                title: l.getOut,
+            CircleAvatar(),
+            // Text(user.is),
+            Text('${l.appVersion}: ${packageInfo.buildNumber}'),
+            Text(''),
+            ElevatedButton(
                 onPressed: () {
-                  context.read<LoginBloc>().add(LogoutRequested());
+                  BlocProvider.of<AuthorizationBloc>(context)
+                      .add(UnAuthoirized());
                 },
-              ),
-            ),
+                child: const Text('log out '))
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 }

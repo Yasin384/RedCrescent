@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:red_crescent/src/feature/app/widget/red_crescent.dart';
 import 'package:red_crescent/src/feature/auth/authorization/bloc/authorization_bloc.dart';
 import 'package:red_crescent/src/feature/auth/authorization/data/authorization_repository.dart';
-import 'package:red_crescent/src/feature/auth/authorization/widget/auth_redirect.dart';
 import 'package:red_crescent/src/feature/auth/login/bloc/login_bloc.dart';
 import 'package:red_crescent/src/feature/auth/login/data/login_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +30,10 @@ abstract final class Runner {
     try {
       final prefs = SharedPreferences.getInstance();
 
+      final flutterSecureStorage = FlutterSecureStorage();
+
+      final packageInfoPlus = await PackageInfo.fromPlatform();
+
       Bloc.observer = MyBlocObserver();
 
       FlutterError.onError = (details) {
@@ -44,6 +49,12 @@ abstract final class Runner {
             error: error, stackTrace: Chain.forTrace(stack));
         return true;
       };
+
+      final authRepository = AuthorizationRepositoryImpl(
+        flutterSecureStorage: flutterSecureStorage,
+      );
+
+      await authRepository.initAuthSession();
 
       runApp(
         MultiRepositoryProvider(
@@ -90,23 +101,25 @@ abstract final class Runner {
             // --- Flutter secure storage --- //
 
             RepositoryProvider(
-              create: (context) => FlutterSecureStorage(),
+              create: (context) => flutterSecureStorage,
             ),
 
-            // --- AuthorizationRepositoryImpl --- //
+            // --- Auth --- //
 
             RepositoryProvider<AuthorizationRepository>(
-              create: (context) {
-                final repository = AuthorizationRepositoryImpl(
-                  flutterSecureStorage: context.read<FlutterSecureStorage>(),
-                );
-                repository.initAuthSession();
-                return repository;
-              },
+              create: (context) => authRepository,
             ),
+
             RepositoryProvider<LoginRepository>(
-              create: (context) => LoginRepositoryImpl(dio: context.read<Dio>()),
+              create: (context) =>
+                  LoginRepositoryImpl(dio: context.read<Dio>()),
             ),
+            // --- Auth --- //
+
+            // --- Utisl --- //
+            RepositoryProvider(create: (context) => packageInfoPlus),
+
+            // --- Utisl --- //
           ],
           child: MultiBlocProvider(
             providers: [
@@ -115,17 +128,17 @@ abstract final class Runner {
                 create: (context) => AuthorizationBloc(
                   authorizationRepository:
                       RepositoryProvider.of<AuthorizationRepository>(context),
-                ),
+                )..add(StartedListenAuthChanges()),
               ),
-
               BlocProvider<LoginBloc>(
                 create: (context) => LoginBloc(
                   loginRepository: context.read<LoginRepository>(),
-                  authorizationRepository: context.read<AuthorizationRepository>(),
+                  authorizationRepository:
+                      context.read<AuthorizationRepository>(),
                 ),
               ),
             ],
-            child: AuthRedirect(),
+            child: RedCrescent(),
           ),
         ),
       );

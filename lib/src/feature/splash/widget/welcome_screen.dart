@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:red_crescent/src/core/constans/assets.dart';
+import 'package:red_crescent/src/core/constans/spacing.dart';
 import 'package:red_crescent/src/core/widget/red_buton.dart';
 import 'package:red_crescent/src/feature/auth/login/widget/login_screen.dart';
 
@@ -39,9 +40,12 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              RedButton(
-                title: l.continueWord,
-                onPressed: () => _pushToRedirectAuthScreen(context),
+              Padding(
+                padding: Spacing.h10,
+                child: RedButton(
+                  title: l.continueWord,
+                  onPressed: () => _pushToRedirectAuthScreen(context),
+                ),
               ),
               SizedBox(height: 20),
             ],
