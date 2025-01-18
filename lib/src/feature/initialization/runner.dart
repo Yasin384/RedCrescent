@@ -7,6 +7,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:red_crescent/src/feature/auth/authorization/bloc/authorization_bloc.dart';
 import 'package:red_crescent/src/feature/auth/authorization/data/authorization_repository.dart';
 import 'package:red_crescent/src/feature/auth/authorization/widget/auth_redirect.dart';
+import 'package:red_crescent/src/feature/auth/login/bloc/login_bloc.dart';
+import 'package:red_crescent/src/feature/auth/login/data/login_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:stack_trace/stack_trace.dart';
@@ -93,21 +95,35 @@ abstract final class Runner {
 
             // --- AuthorizationRepositoryImpl --- //
 
-            RepositoryProvider(
-                create: (context) => AuthorizationRepositoryImpl(
-                      flutterSecureStorage:
-                          RepositoryProvider.of<FlutterSecureStorage>(context),
-                    )..initAuthSession())
+            RepositoryProvider<AuthorizationRepository>(
+              create: (context) {
+                final repository = AuthorizationRepositoryImpl(
+                  flutterSecureStorage: context.read<FlutterSecureStorage>(),
+                );
+                repository.initAuthSession();
+                return repository;
+              },
+            ),
+            RepositoryProvider<LoginRepository>(
+              create: (context) => LoginRepositoryImpl(dio: context.read<Dio>()),
+            ),
           ],
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
-                  lazy: false,
-                  create: (context) => AuthorizationBloc(
-                        authorizationRepository:
-                            RepositoryProvider.of<AuthorizationRepository>(
-                                context),
-                      ))
+                lazy: false,
+                create: (context) => AuthorizationBloc(
+                  authorizationRepository:
+                      RepositoryProvider.of<AuthorizationRepository>(context),
+                ),
+              ),
+
+              BlocProvider<LoginBloc>(
+                create: (context) => LoginBloc(
+                  loginRepository: context.read<LoginRepository>(),
+                  authorizationRepository: context.read<AuthorizationRepository>(),
+                ),
+              ),
             ],
             child: AuthRedirect(),
           ),

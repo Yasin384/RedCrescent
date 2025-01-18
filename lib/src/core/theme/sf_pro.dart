@@ -23,30 +23,29 @@ final class SfPro extends ThemeExtension<SfPro> with _$SfProTailorMixin {
   @override
   final TextStyle s10W400;
   @override
-  @override
   final MyColor myColor;
 
   factory SfPro.light() {
-    final myColor = MyColor.ligth();
+    final myColor = MyColor.light();
 
     return SfPro(
       s24W500: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w500,
         fontFamily: 'SF Pro Display',
-        color: myColor.red,
+        color: myColor.blackText,
       ),
       s16W400: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
         fontFamily: 'SF Pro Display',
-        color: myColor.red,
+        color: myColor.greyText,
       ),
       s18W600: TextStyle(
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: FontWeight.w600,
         fontFamily: 'SF Pro Display',
-        color: myColor.red,
+        color: myColor.blackText,
       ),
       s10W400: TextStyle(
         fontSize: 10,

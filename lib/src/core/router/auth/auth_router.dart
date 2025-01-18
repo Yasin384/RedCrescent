@@ -4,12 +4,8 @@ import 'package:red_crescent/src/feature/splash/widget/select_auth_type_screen.d
 import 'package:red_crescent/src/feature/splash/widget/welcome_screen.dart';
 
 final authRouter = GoRouter(
+  initialLocation: WelcomeScreen.routePath,
   routes: [
-    GoRoute(
-        path: SelectAuthTypeScreen.routePath,
-        builder: (context, state) {
-          return SelectAuthTypeScreen();
-        }),
     GoRoute(
       path: WelcomeScreen.routePath,
       builder: (context, state) {
@@ -21,6 +17,11 @@ final authRouter = GoRouter(
       builder: (context, state) {
         return LoginScreen();
       },
-    )
+    ),
+    GoRoute(
+        path: SelectAuthTypeScreen.routePath,
+        builder: (context, state) {
+          return SelectAuthTypeScreen();
+        }),
   ],
 );

@@ -13,6 +13,8 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     AuthorizationState? authorizationState,
   })  : _authorizationRepository = authorizationRepository,
         super(authorizationState ?? UnAuthorized()) {
+
+
     on<AuthorizationEvent>(
       (event, emit) => switch (event) {
         // TODO: Handle this case.
@@ -21,6 +23,10 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
       },
       transformer: bloc_concurrency.concurrent(),
     );
+
+    // добавил автоматический запуск прослушивания при создании блока
+    add(StartedListenAuthChanges());
+
   }
 
   Future<void> _onStartedListenAuthChanges(

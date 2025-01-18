@@ -23,7 +23,6 @@ final appRouter = GoRouter(
     initialLocation: LeaderboardScreen.routePath,
     navigatorKey: _rootNavigatorKey,
     routes: [
-     
       StatefulShellRoute.indexedStack(
         pageBuilder: (context, state, shell) {
           return NoTransitionPage(

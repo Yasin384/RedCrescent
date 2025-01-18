@@ -33,7 +33,7 @@ final class AuthorizationRepositoryImpl implements AuthorizationRepository {
   final BehaviorSubject<Access?> _accessSubj = BehaviorSubject.seeded(null);
 
   @override
-  BehaviorSubject<Access?> get accesSubj => throw UnimplementedError();
+  BehaviorSubject<Access?> get accesSubj => _accessSubj; // вернул приватное поле
 
   @override
   Future<void> authorize(Access acces) async {

@@ -27,12 +27,18 @@ final class LoginRepositoryImpl implements LoginRepository {
   Future<Access> login(UserCredentialDto userCredentialDto) async {
     try {
       final response =
-          await _dio.get('login', data: userCredentialDto.toJson());
+          await _dio.post('https://redcresentt-production.up.railway.app/api/login/', data: userCredentialDto.toJson());
+
+      print(response.data);
+
+      if (response.data == null) {
+        throw LoginException.incorrectData;
+      }
 
       return Access.fromJson(response.data);
     } on DioException catch (error, stackTrace) {
       Error.throwWithStackTrace(
-        LoginException.fromStatusCode(error.response!.statusCode ?? 0),
+        LoginException.fromStatusCode(error.response?.statusCode ?? 0),
         stackTrace,
       );
     } on Object catch (error, stackTrace) {

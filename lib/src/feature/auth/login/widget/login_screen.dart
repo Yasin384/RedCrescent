@@ -1,9 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:red_crescent/src/core/constans/spacing.dart';
+import 'package:red_crescent/src/core/theme/my_color.dart';
+import 'package:red_crescent/src/core/theme/sf_pro.dart';
+import 'package:red_crescent/src/core/widget/app_textfiled.dart';
+import 'package:red_crescent/src/core/widget/red_buton.dart';
 import 'package:red_crescent/src/feature/auth/authorization/data/authorization_repository.dart';
 import 'package:red_crescent/src/feature/auth/login/bloc/login_bloc.dart';
 import 'package:red_crescent/src/feature/auth/login/data/login_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:red_crescent/src/feature/auth/login/model/user_credential_dto.dart';
+import 'package:red_crescent/src/feature/auth/login/widget/error_dialog.dart';
 
 /// {@template login_screen}
 /// LoginScreen widget.
@@ -20,7 +28,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (context) => LoginRepositoryImpl(
-        dio: RepositoryProvider.of<Dio>(context),
+        dio: context.read<Dio>(),
       ),
       child: BlocProvider(
         create: (context) => LoginBloc(
@@ -48,58 +56,91 @@ class _LoginScreen extends StatefulWidget {
 
 /// State for widget _LoginScreen.
 class __LoginScreenState extends State<_LoginScreen> {
-  /* #region Lifecycle */
-  @override
-  void initState() {
-    super.initState();
-    // Initial state initialization
-  }
-
-  @override
-  void didUpdateWidget(covariant _LoginScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Widget configuration changed
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // The configuration of InheritedWidgets has changed
-    // Also called after initState but before build
-  }
+  final TextEditingController loginController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   void dispose() {
-    // Permanent removal of a tree stent
+    loginController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
-  /* #endregion */
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final theme = Theme.of(context).extension<MyColor>()!;
+    final textTheme = Theme.of(context).extension<SfPro>()!;
+
     return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
-        // TODO: implement listener
+        if(state is LoginError) {
+          CustomErrorDialog.show(
+            context: context,
+            error: state.loginException,
+            onRetry: () {
+              Navigator.of(context).pop();
+            },
+            onHelp: () {
+              Navigator.of(context).pop();
+            },
+          );        }
       },
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: state.isLoginInProgress
-                              ? Colors.blueGrey
-                              : Colors.red),
-                      child: const Text('hello'))
-                ],
+              child: Padding(
+                padding: Spacing.h14,
+                child: Column(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(l.help, style: textTheme.s16W400),
+                    ),
+                    const SizedBox(height: 40),
+                    Text(l.forAuthorization,
+                        style: textTheme.s24W500, textAlign: TextAlign.center),
+                    const SizedBox(height: 40),
+                    AppTextFiled(
+                      controller: loginController,
+                      label: l.login,
+                      description: l.usernameProvided,
+                    ),
+                    const SizedBox(height: 30),
+                    AppTextFiled(
+                      controller: passwordController,
+                      label: l.password,
+                      description: l.passwordProvided,
+                    ),
+                    const SizedBox(height: 90),
+                    RedButton(
+                      isLoading: state.isLoginInProgress,
+                      title: l.signIn,
+                      onPressed: () {
+                        print('jjjj');
+                        _singIn(context);
+                      },
+                    ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
               ),
             ),
           ),
         );
       },
     );
+  }
+
+  void _singIn(BuildContext context) {
+    context.read<LoginBloc>().add(
+          Logged(
+            userCredentialDto: UserCredentialDto(
+              username: loginController.text,
+              password: passwordController.text,
+            ),
+          ),
+        );
   }
 }
