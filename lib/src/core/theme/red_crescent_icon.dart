@@ -17,4 +17,9 @@ class RedCrescentIcon {
     59394,
     fontFamily: 'redcrescent',
   );
+
+  static const IconData arrowIcon = IconData(
+    59396,
+    fontFamily: 'redcrescent',
+  );
 }
