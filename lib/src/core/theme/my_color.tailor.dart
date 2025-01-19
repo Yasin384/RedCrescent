@@ -11,24 +11,27 @@ part of 'my_color.dart';
 mixin _$MyColorTailorMixin on ThemeExtension<MyColor> {
   Color get red;
   Color get blue;
-  Color get greyText;
-  Color get blackText;
+  Color get grey;
+  Color get black;
   Color get white;
+  Color get sliverGrey;
 
   @override
   MyColor copyWith({
     Color? red,
     Color? blue,
-    Color? greyText,
-    Color? blackText,
+    Color? grey,
+    Color? black,
     Color? white,
+    Color? sliverGrey,
   }) {
     return MyColor(
       red: red ?? this.red,
       blue: blue ?? this.blue,
-      greyText: greyText ?? this.greyText,
-      blackText: blackText ?? this.blackText,
+      grey: grey ?? this.grey,
+      black: black ?? this.black,
       white: white ?? this.white,
+      sliverGrey: sliverGrey ?? this.sliverGrey,
     );
   }
 
@@ -38,9 +41,10 @@ mixin _$MyColorTailorMixin on ThemeExtension<MyColor> {
     return MyColor(
       red: Color.lerp(red, other.red, t)!,
       blue: Color.lerp(blue, other.blue, t)!,
-      greyText: Color.lerp(greyText, other.greyText, t)!,
-      blackText: Color.lerp(blackText, other.blackText, t)!,
+      grey: Color.lerp(grey, other.grey, t)!,
+      black: Color.lerp(black, other.black, t)!,
       white: Color.lerp(white, other.white, t)!,
+      sliverGrey: Color.lerp(sliverGrey, other.sliverGrey, t)!,
     );
   }
 
@@ -51,9 +55,11 @@ mixin _$MyColorTailorMixin on ThemeExtension<MyColor> {
             other is MyColor &&
             const DeepCollectionEquality().equals(red, other.red) &&
             const DeepCollectionEquality().equals(blue, other.blue) &&
-            const DeepCollectionEquality().equals(greyText, other.greyText) &&
-            const DeepCollectionEquality().equals(blackText, other.blackText) &&
-            const DeepCollectionEquality().equals(white, other.white));
+            const DeepCollectionEquality().equals(grey, other.grey) &&
+            const DeepCollectionEquality().equals(black, other.black) &&
+            const DeepCollectionEquality().equals(white, other.white) &&
+            const DeepCollectionEquality()
+                .equals(sliverGrey, other.sliverGrey));
   }
 
   @override
@@ -62,9 +68,10 @@ mixin _$MyColorTailorMixin on ThemeExtension<MyColor> {
       runtimeType.hashCode,
       const DeepCollectionEquality().hash(red),
       const DeepCollectionEquality().hash(blue),
-      const DeepCollectionEquality().hash(greyText),
-      const DeepCollectionEquality().hash(blackText),
+      const DeepCollectionEquality().hash(grey),
+      const DeepCollectionEquality().hash(black),
       const DeepCollectionEquality().hash(white),
+      const DeepCollectionEquality().hash(sliverGrey),
     );
   }
 }
@@ -73,7 +80,10 @@ extension MyColorBuildContextProps on BuildContext {
   MyColor get myColor => Theme.of(this).extension<MyColor>()!;
   Color get red => myColor.red;
   Color get blue => myColor.blue;
-  Color get greyText => myColor.greyText;
-  Color get blackText => myColor.blackText;
+  Color get grey => myColor.grey;
+  Color get black => myColor.black;
   Color get white => myColor.white;
+
+  /// HEX: #D9D9D9
+  Color get sliverGrey => myColor.sliverGrey;
 }

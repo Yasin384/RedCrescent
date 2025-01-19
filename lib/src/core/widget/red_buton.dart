@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:red_crescent/src/core/constans/spacing.dart';
 
 import '../theme/my_color.dart';
 
@@ -25,25 +24,23 @@ class RedButton extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     final theme = Theme.of(context).extension<MyColor>()!;
-    return Padding(
-      padding: Spacing.h10,
-      child: FilledButton(
-        onPressed: isLoading == true ? null : onPressed,
-        style: Theme.of(context).filledButtonTheme.style!.copyWith(
-              minimumSize: WidgetStatePropertyAll(
-                Size(width, height * 0.05),
-              ),
-          backgroundColor: WidgetStatePropertyAll(
-            btnColor ?? theme.red
-          ),
+    return FilledButton(
+      onPressed: isLoading == true ? null : onPressed,
+      style: Theme.of(context).filledButtonTheme.style!.copyWith(
+            minimumSize: WidgetStatePropertyAll(
+              Size(width, height * 0.05),
             ),
-        child: isLoading == true ? _buildCircularProgressIndicator(theme) : Text(title),
-      ),
+            backgroundColor: WidgetStatePropertyAll(btnColor ?? theme.red),
+          ),
+      child: isLoading == true
+          ? _buildCircularProgressIndicator(theme)
+          : Text(title),
     );
   }
 
-  CircularProgressIndicator _buildCircularProgressIndicator(MyColor theme ) =>  CircularProgressIndicator(
-    strokeWidth: 2.0,
-    color: theme.white,
-  );
+  CircularProgressIndicator _buildCircularProgressIndicator(MyColor theme) =>
+      CircularProgressIndicator(
+        strokeWidth: 2.0,
+        color: theme.white,
+      );
 }

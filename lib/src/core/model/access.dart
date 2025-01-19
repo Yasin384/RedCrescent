@@ -1,7 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // To parse this JSON data, do
 //
 //     final access = accessFromJson(jsonString);
-
 
 import 'dart:convert';
 
@@ -21,16 +21,16 @@ class Access {
   });
 
   factory Access.fromJson(Map<String, dynamic> json) => Access(
-    access: json["access"],
-    refresh: json["refresh"],
-    user: User.fromJson(json["user"]),
-  );
+        access: json["access"],
+        refresh: json["refresh"],
+        user: User.fromJson(json["user"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "access": access,
-    "refresh": refresh,
-    "user": user.toJson(),
-  };
+        "access": access,
+        "refresh": refresh,
+        "user": user.toJson(),
+      };
 }
 
 class User {
@@ -39,13 +39,15 @@ class User {
   final String email;
   final bool isStaff;
   final bool isActive;
-  final String? firstName;
-  final String? lastName;
+  final String? profilePictureUrl;
+  final String firstName;
+  final String lastName;
   final String? gender;
   final String? role;
   final String? phoneNumber;
   final String totalHours;
   final int xpPoints;
+  final String? dateJoined;
 
   User({
     required this.id,
@@ -53,42 +55,53 @@ class User {
     required this.email,
     required this.isStaff,
     required this.isActive,
-    this.firstName,
-    this.lastName,
+    required this.firstName,
+    required this.lastName,
     this.gender,
     this.role,
     this.phoneNumber,
     required this.totalHours,
     required this.xpPoints,
+    this.profilePictureUrl,
+    this.dateJoined,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    username: json["username"],
-    email: json["email"],
-    isStaff: json["is_staff"],
-    isActive: json["is_active"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
-    gender: json["gender"],
-    role: json["role"],
-    phoneNumber: json["phone_number"],
-    totalHours: json["total_hours"],
-    xpPoints: json["xp_points"] ?? 0,
-  );
+        id: json["id"],
+        username: json["username"],
+        email: json["email"],
+        isStaff: json["is_staff"],
+        isActive: json["is_active"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        gender: json["gender"],
+        role: json["role"],
+        profilePictureUrl: json["profile_picture_url"],
+        phoneNumber: json["phone_number"],
+        totalHours: json["total_hours"],
+        xpPoints: json["xp_points"] ?? 0,
+        dateJoined: json["date_joined"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "username": username,
-    "email": email,
-    "is_staff": isStaff,
-    "is_active": isActive,
-    "first_name": firstName,
-    "last_name": lastName,
-    "gender": gender,
-    "role": role,
-    "phone_number": phoneNumber,
-    "total_hours": totalHours,
-    "xp_points": xpPoints,
-  };
+        "id": id,
+        "username": username,
+        "email": email,
+        "is_staff": isStaff,
+        "is_active": isActive,
+        "first_name": firstName,
+        "last_name": lastName,
+        "gender": gender,
+        "role": role,
+        "phone_number": phoneNumber,
+        "total_hours": totalHours,
+        "xp_points": xpPoints,
+        "profile_picture_url": profilePictureUrl,
+        "date_joined": dateJoined,
+      };
+
+  @override
+  String toString() {
+    return 'User(id: $id, username: $username, email: $email, isStaff: $isStaff, isActive: $isActive, firstName: $firstName, lastName: $lastName, gender: $gender, role: $role, phoneNumber: $phoneNumber, totalHours: $totalHours, xpPoints: $xpPoints,"profilePictureUrl:" $profilePictureUrl,"date_joined:"$dateJoined)';
+  }
 }

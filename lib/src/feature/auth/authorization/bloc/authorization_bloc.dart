@@ -10,23 +10,15 @@ part 'authorization_state.dart';
 class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
   AuthorizationBloc({
     required AuthorizationRepository authorizationRepository,
-    AuthorizationState? authorizationState,
   })  : _authorizationRepository = authorizationRepository,
-        super(authorizationState ?? UnAuthorized()) {
-
-
+        super(UnAuthorized()) {
     on<AuthorizationEvent>(
       (event, emit) => switch (event) {
-        // TODO: Handle this case.
         StartedListenAuthChanges() => _onStartedListenAuthChanges(event, emit),
         UnAuthoirized() => _onUnAuthoirzed(event, emit),
       },
       transformer: bloc_concurrency.concurrent(),
     );
-
-    // добавил автоматический запуск прослушивания при создании блока
-    add(StartedListenAuthChanges());
-
   }
 
   Future<void> _onStartedListenAuthChanges(

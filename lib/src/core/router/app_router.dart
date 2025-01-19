@@ -20,69 +20,70 @@ final _profileNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'statisctics');
 
 final appRouter = GoRouter(
-    initialLocation: LeaderboardScreen.routePath,
-    navigatorKey: _rootNavigatorKey,
-    routes: [
-      StatefulShellRoute.indexedStack(
-        pageBuilder: (context, state, shell) {
-          return NoTransitionPage(
-            child: ShellWidget(shell: shell),
-          );
-        },
-        branches: [
-          // --- Leader bord branch --- //
-          StatefulShellBranch(
-            navigatorKey: _leaderboardNavigatorKey,
-            routes: [
-              GoRoute(
-                  path: LeaderboardScreen.routePath,
-                  pageBuilder: (context, state) {
-                    return NoTransitionPage(
-                      child: LeaderboardScreen(),
-                    );
-                  }),
-            ],
-          ),
-
-          StatefulShellBranch(
-            navigatorKey: _statiscticsNavigatorKey,
-            routes: [
-              GoRoute(
-                path: StatisticsScreen.routePath,
+  initialLocation: LeaderboardScreen.routePath,
+  navigatorKey: _rootNavigatorKey,
+  routes: [
+    StatefulShellRoute.indexedStack(
+      pageBuilder: (context, state, shell) {
+        return NoTransitionPage(
+          child: ShellWidget(shell: shell),
+        );
+      },
+      branches: [
+        // --- Leader bord branch --- //
+        StatefulShellBranch(
+          navigatorKey: _leaderboardNavigatorKey,
+          routes: [
+            GoRoute(
+                path: LeaderboardScreen.routePath,
                 pageBuilder: (context, state) {
-                  return NoTransitionPage(child: StatisticsScreen());
-                },
-              )
-            ],
-          ),
+                  return NoTransitionPage(
+                    child: LeaderboardScreen(),
+                  );
+                }),
+          ],
+        ),
 
-          StatefulShellBranch(
-            navigatorKey: _tasksNavigatorKey,
-            routes: [
-              GoRoute(
-                path: TasksScreen.routePath,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(child: TasksScreen());
-                },
-              ),
-            ],
-          ),
+        StatefulShellBranch(
+          navigatorKey: _statiscticsNavigatorKey,
+          routes: [
+            GoRoute(
+              path: StatisticsScreen.routePath,
+              pageBuilder: (context, state) {
+                return NoTransitionPage(child: StatisticsScreen());
+              },
+            )
+          ],
+        ),
 
-          StatefulShellBranch(
-            navigatorKey: _profileNavigatorKey,
-            routes: [
-              GoRoute(
-                path: ProfileScreen.routePath,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(child: ProfileScreen());
-                },
-              ),
-            ],
-          ),
-        ],
-      )
-    ],
-    observers: [
-      // --- Router observer --- //
-      RouteObserver()
-    ]);
+        StatefulShellBranch(
+          navigatorKey: _tasksNavigatorKey,
+          routes: [
+            GoRoute(
+              path: TasksScreen.routePath,
+              pageBuilder: (context, state) {
+                return NoTransitionPage(child: TasksScreen());
+              },
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          navigatorKey: _profileNavigatorKey,
+          routes: [
+            GoRoute(
+              path: ProfileScreen.routePath,
+              pageBuilder: (context, state) {
+                return NoTransitionPage(child: ProfileScreen());
+              },
+            ),
+          ],
+        ),
+      ],
+    )
+  ],
+  observers: [
+    // --- Router observer --- //
+    RouteObserver()
+  ],
+);

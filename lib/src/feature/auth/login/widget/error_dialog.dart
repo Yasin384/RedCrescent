@@ -51,7 +51,7 @@ class CustomErrorDialog extends StatelessWidget {
             Text(
               l.error,
               style: textTheme.s24W500.copyWith(
-                color: theme.blackText,
+                color: theme.black,
                 fontSize: 20,
               ),
               textAlign: TextAlign.center,
@@ -61,7 +61,7 @@ class CustomErrorDialog extends StatelessWidget {
               l.errorMessage,
               textAlign: TextAlign.center,
               style: textTheme.s16W400.copyWith(
-                color: theme.blackText,
+                color: theme.black,
               ),
             ),
             const SizedBox(height: 24),

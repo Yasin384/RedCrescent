@@ -9,6 +9,11 @@ sealed class AuthorizationState extends Equatable {
         _ => false,
       };
 
+  User? get user => switch (this) {
+        Authorized authorized => authorized.access.user,
+        _ => null
+      };
+
   @override
   List<Object?> get props => [];
 }
