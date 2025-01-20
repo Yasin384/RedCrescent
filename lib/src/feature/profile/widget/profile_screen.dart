@@ -45,6 +45,54 @@ class ProfileScreen extends StatelessWidget {
                     user: user,
                     theme: theme,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Достижение', style: theme.s16W400),
+                        ],
+                      ),
+                      SizedBox(width: 61),
+                      Expanded(
+                        child: SizedBox(
+                          height: 200,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: user.achievements.length,
+                            itemBuilder: (context, index) {
+                              return SizedBox(
+                                height: MediaQuery.sizeOf(context).height / 25,
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: theme.myColor.grey,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      user.achievements[index].name,
+                                      style: theme.s16W400
+                                          .copyWith(color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(height: 16);
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   AppSettingsWidget(),
                   Text(
                     '${l.appVersion}: ${packageInfo.buildNumber}',

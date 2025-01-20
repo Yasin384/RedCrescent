@@ -26,8 +26,9 @@ final class LoginRepositoryImpl implements LoginRepository {
   @override
   Future<Access> login(UserCredentialDto userCredentialDto) async {
     try {
-      final response =
-          await _dio.post('https://redcresentt-production.up.railway.app/api/login/', data: userCredentialDto.toJson());
+      final response = await _dio.post(
+          'https://redcresent22.onrender.com/api/login/',
+          data: userCredentialDto.toJson());
 
       print(response.data);
 
