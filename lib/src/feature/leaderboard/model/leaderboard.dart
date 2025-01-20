@@ -1,23 +1,25 @@
 import 'dart:convert';
 
-// Helper functions for JSON conversion
-UserResponse userResponseFromJson(String str) => UserResponse.fromJson(json.decode(str));
-String userResponseToJson(UserResponse data) => json.encode(data.toJson());
+import 'package:red_crescent/src/core/enum/role_enum.dart';
 
-class UserResponse {
+// Helper functions for JSON conversion
+LeaderBoard LeaderBoardFromJson(String str) => LeaderBoard.fromJson(json.decode(str));
+String LeaderBoardToJson(LeaderBoard data) => json.encode(data.toJson());
+
+class LeaderBoard {
   final int count;
   final String? next;
   final String? previous;
   final List<UserResult> results;
 
-  UserResponse({
+  LeaderBoard({
     required this.count,
     this.next,
     this.previous,
     required this.results,
   });
 
-  factory UserResponse.fromJson(Map<String, dynamic> json) => UserResponse(
+  factory LeaderBoard.fromJson(Map<String, dynamic> json) => LeaderBoard(
     count: json["count"],
     next: json["next"],
     previous: json["previous"],
@@ -47,7 +49,7 @@ class UserResult {
   final bool isActive;
   final DateTime dateJoined;
   final String? gender;
-  final String? role;
+  final Role role;
   final String? phoneNumber;
   final String totalHours;
   final int xpPoints;
@@ -71,7 +73,7 @@ class UserResult {
     required this.isActive,
     required this.dateJoined,
     this.gender,
-    this.role,
+    Role? role,
     this.phoneNumber,
     required this.totalHours,
     required this.xpPoints,
@@ -79,7 +81,7 @@ class UserResult {
     this.profilePictureHeight,
     required this.groups,
     required this.userPermissions,
-  });
+  }) : role = role ?? Role.admin;
 
   factory UserResult.fromJson(Map<String, dynamic> json) => UserResult(
     id: json["id"],
@@ -97,7 +99,7 @@ class UserResult {
     isActive: json["is_active"],
     dateJoined: DateTime.parse(json["date_joined"]),
     gender: json["gender"],
-    role: json["role"],
+    role: Role.fromString(json["role"]),
     phoneNumber: json["phone_number"],
     totalHours: json["total_hours"],
     xpPoints: json["xp_points"],

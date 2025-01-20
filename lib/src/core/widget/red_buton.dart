@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:red_crescent/src/feature/app/widget/custom_circular_progress_indicator.dart';
+import 'package:red_crescent/src/core/widget/custom_circular_progress_indicator.dart';
 
 import '../theme/my_color.dart';
 
@@ -41,7 +41,7 @@ class RedButton extends StatelessWidget {
   }
 
   SizedBox _buildCircularProgressIndicator(MyColor theme) => SizedBox(
-    height: 30,
+        height: 30,
         width: 30,
         child: CustomCircularProgressIndicator(color: theme.white),
       );

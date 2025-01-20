@@ -4,10 +4,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:red_crescent/src/core/constans/spacing.dart';
 import 'package:red_crescent/src/core/theme/my_color.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
+import 'package:red_crescent/src/core/widget/custom_circular_progress_indicator.dart';
 import 'package:red_crescent/src/core/widget/red_buton.dart';
-import 'package:red_crescent/src/feature/app/widget/custom_circular_progress_indicator.dart';
 import 'package:red_crescent/src/feature/leaderboard/bloc/leaderboard_bloc.dart';
-import 'package:red_crescent/src/feature/leaderboard/model/user_response.dart';
+import 'package:red_crescent/src/feature/leaderboard/model/leaderboard.dart';
 import 'package:red_crescent/src/feature/leaderboard/widget/leaderboard_card.dart';
 
 class LeaderboardScreen extends StatefulWidget {
@@ -22,13 +22,6 @@ class LeaderboardScreen extends StatefulWidget {
 }
 
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Запрашиваем данные при открытии экрана
-  //   context.read<LeaderboardBloc>().add(GetLeaderboard());
-  // }
-
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context);
@@ -52,12 +45,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             builder: (context, state) {
               return switch (state) {
                 LeaderboardInitial() => const SizedBox(),
-                LeaderboardLoading() =>  CustomCircularProgressIndicator(color: theme.red),
-                LeaderboardLoaded(userResponse: final users) => _LeaderboardList(
+                LeaderboardLoading() =>
+                  CustomCircularProgressIndicator(color: theme.red),
+                LeaderboardLoaded(userResponse: final users) =>
+                  _LeaderboardList(
                     users: users,
                   ),
                 LeaderboardError(message: final message) =>
-                  _buildError(message, sfPro, theme, context, text),
+                  _LeaderboardError(message: message),
               };
             },
           ),
@@ -65,9 +60,20 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
       ),
     );
   }
+}
 
-  Padding _buildError(String message, SfPro sfPro, MyColor theme,
-      BuildContext context, AppLocalizations text) {
+class _LeaderboardError extends StatelessWidget {
+  const _LeaderboardError({
+    required this.message,
+  });
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    final sfPro = Theme.of(context).extension<SfPro>()!;
+    final theme = Theme.of(context).extension<MyColor>()!;
+    final text = AppLocalizations.of(context);
     return Padding(
       padding: Spacing.h16V12,
       child: Center(
@@ -99,7 +105,7 @@ class _LeaderboardList extends StatelessWidget {
     required this.users,
   });
 
-  final UserResponse users;
+  final LeaderBoard users;
 
   @override
   Widget build(BuildContext context) {

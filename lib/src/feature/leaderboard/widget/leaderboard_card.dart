@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:red_crescent/src/core/theme/my_color.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
-import 'package:red_crescent/src/feature/leaderboard/model/user_response.dart';
+import 'package:red_crescent/src/core/widget/build_image.dart';
+import 'package:red_crescent/src/feature/leaderboard/model/leaderboard.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LeaderboardCard extends StatelessWidget {
@@ -20,7 +21,7 @@ class LeaderboardCard extends StatelessWidget {
           radius: 37,
           child: ClipOval(
             child: user.profilePictureUrl != null
-                ? _buildImage(theme)
+                ? BuildImage(user: user)
                 : Container(
                     color: theme.grey,
                     child: Icon(
@@ -47,34 +48,5 @@ class LeaderboardCard extends StatelessWidget {
       ],
     );
   }
-
-  Image _buildImage(MyColor theme) {
-    return Image.network(
-      user.profilePictureUrl!,
-      fit: BoxFit.cover,
-      width: 74,
-      height: 74,
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) return child;
-        return Center(
-          child: CircularProgressIndicator(
-            value: loadingProgress.expectedTotalBytes != null
-                ? loadingProgress.cumulativeBytesLoaded /
-                loadingProgress.expectedTotalBytes!
-                : null,
-          ),
-        );
-      },
-      errorBuilder: (context, error, stackTrace) {
-        return Container(
-          color: theme.grey,
-          child: Icon(
-            Icons.person,
-            color: theme.white,
-            size: 73,
-          ),
-        );
-      },
-    );
-  }
 }
+

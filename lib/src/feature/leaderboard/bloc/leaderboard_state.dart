@@ -12,7 +12,7 @@ final class LeaderboardInitial extends LeaderboardState {}
 final class LeaderboardLoading extends LeaderboardState {}
 
 final class LeaderboardLoaded extends LeaderboardState {
-  final UserResponse userResponse;
+  final LeaderBoard userResponse;
   const LeaderboardLoaded(this.userResponse);
 
   @override
