@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:red_crescent/src/feature/app/widget/custom_circular_progress_indicator.dart';
 
 import '../theme/my_color.dart';
 
@@ -14,6 +15,7 @@ class RedButton extends StatelessWidget {
     super.key,
     this.btnColor,
   });
+
   final String title;
   final VoidCallback onPressed;
   final bool? isLoading;
@@ -38,9 +40,9 @@ class RedButton extends StatelessWidget {
     );
   }
 
-  CircularProgressIndicator _buildCircularProgressIndicator(MyColor theme) =>
-      CircularProgressIndicator(
-        strokeWidth: 2.0,
-        color: theme.white,
+  SizedBox _buildCircularProgressIndicator(MyColor theme) => SizedBox(
+    height: 30,
+        width: 30,
+        child: CustomCircularProgressIndicator(color: theme.white),
       );
 }

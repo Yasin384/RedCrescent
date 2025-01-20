@@ -4,7 +4,7 @@ import 'package:red_crescent/src/core/theme/sf_pro.dart';
 
 final lightTheme = ThemeData(
   scaffoldBackgroundColor: _ligthColor.white,
-  appBarTheme: AppBarTheme(backgroundColor: _ligthColor.white),
+  appBarTheme: AppBarTheme(backgroundColor: _ligthColor.white, elevation: 0, scrolledUnderElevation: 0, centerTitle: false),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: _ligthColor.white,
   ),

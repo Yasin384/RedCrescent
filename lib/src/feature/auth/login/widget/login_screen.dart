@@ -63,8 +63,8 @@ class __LoginScreenState extends State<_LoginScreen> {
 
   @override
   void initState() {
-    _loginController = TextEditingController(text: 'Zalkar');
-    _passwordController = TextEditingController(text: 'zalkarzalkar');
+    _loginController = TextEditingController(text: 'Zalkarbro');
+    _passwordController = TextEditingController(text: 'venvvenvvenv');
     _loginFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
     super.initState();
