@@ -20,7 +20,7 @@ final _profileNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'statisctics');
 
 final appRouter = GoRouter(
-  initialLocation: LeaderboardScreen.routePath,
+  initialLocation: TasksScreen.routePath,
   navigatorKey: _rootNavigatorKey,
   routes: [
     StatefulShellRoute.indexedStack(

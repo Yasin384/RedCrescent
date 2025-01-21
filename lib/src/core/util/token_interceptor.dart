@@ -20,6 +20,7 @@ final class TokenInterceptor extends Interceptor {
     if (access != null && access.isNotEmpty) {
       options.headers['Authorization'] =
           'Bearer ${accessFromJson(access).access}';
+      return handler.next(options);
     }
     return handler.next(options);
   }

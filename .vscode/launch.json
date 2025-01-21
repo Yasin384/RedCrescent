@@ -11,7 +11,7 @@
             "program": "lib/main_prod.dart",
             "toolArgs": [
                 "--dart-define",
-                "BASEURL=https://redcresentt-production.up.railway.app/api/",
+                "BASEURL=https://redcresent22.onrender.com/",
             ]
         },
         {
@@ -21,7 +21,7 @@
             "program": "lib/main_dev.dart",
             "toolArgs": [
                 "--dart-define",
-                "BASEURL=https://redcresentt-production.up.railway.app/api/",
+                "BASEURL=https://redcresent22.onrender.com/",
             ]
         },
     ]
