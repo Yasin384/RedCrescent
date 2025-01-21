@@ -17,8 +17,6 @@ enum PageTile implements Comparable<PageTile> {
   const PageTile(this.value);
 
   ///  Данный метод возвращает текущее название выбранной страницы.
-  ///
-  ///
   static String fromValue(BuildContext context, int value, {String? fallback}) {
     final l = AppLocalizations.of(context);
     switch (value) {

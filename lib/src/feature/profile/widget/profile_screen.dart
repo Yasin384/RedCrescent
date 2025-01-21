@@ -91,7 +91,7 @@ class ProfileScreen extends StatelessWidget {
                   '${l.appVersion}: ${packageInfo.buildNumber}',
                   style: theme.s16W400,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 30),
                 RedButton(title: l.exit, onPressed: () => _signOut(context))
               ],
             ),
