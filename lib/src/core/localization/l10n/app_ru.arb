@@ -10,7 +10,7 @@
   "signIn": "Войти",
   "help": "Помощь",
   "volunteers": "Волонтеры",
-  "leaderbord": "Лидерборд",
+  "leaderboard": "Лидерборд",
   "statistics": "Статистика",
   "tasks": "Задачи",
   "profile": "Профиль",
@@ -25,4 +25,6 @@
   "tryAgain": "Попробовать снова",
   "appVersion": "Версия приложения",
   "settings_app":"Настройки приложения"
+  "totalHours": "общее время волонтерства",
+  "hours": "ч"
 }

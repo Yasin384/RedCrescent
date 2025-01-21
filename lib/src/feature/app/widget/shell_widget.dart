@@ -47,7 +47,7 @@ class ShellWidget extends StatelessWidget {
         items: [
           BottomNavigationBarItem(
             icon: Icon(RedCrescentIcon.leaderBoardIcon),
-            label: l.leaderbord,
+            label: l.leaderboard,
           ),
           BottomNavigationBarItem(
             icon: Icon(RedCrescentIcon.statisticIcon),

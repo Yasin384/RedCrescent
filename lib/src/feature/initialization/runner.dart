@@ -5,11 +5,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:red_crescent/src/core/constans/storage_key.dart';
+import 'package:red_crescent/src/core/model/access.dart';
+import 'package:red_crescent/src/core/util/token_interceptor.dart';
 import 'package:red_crescent/src/feature/app/widget/red_crescent.dart';
 import 'package:red_crescent/src/feature/auth/authorization/bloc/authorization_bloc.dart';
 import 'package:red_crescent/src/feature/auth/authorization/data/authorization_repository.dart';
 import 'package:red_crescent/src/feature/auth/login/bloc/login_bloc.dart';
 import 'package:red_crescent/src/feature/auth/login/data/login_repository.dart';
+import 'package:red_crescent/src/feature/leaderboard/bloc/leaderboard_bloc.dart';
+import 'package:red_crescent/src/feature/leaderboard/data/leaderboard_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:stack_trace/stack_trace.dart';
@@ -70,13 +75,41 @@ abstract final class Runner {
             RepositoryProvider(
               create: (context) => Dio(
                 BaseOptions(
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                  },
                   receiveDataWhenStatusError: true,
                   receiveTimeout: const Duration(seconds: 5),
                   connectTimeout: const Duration(seconds: 3),
-                  baseUrl: const String.fromEnvironment('BASEURL'),
+                  baseUrl: const String.fromEnvironment('BASEURL', defaultValue: 'https://redcresent22.onrender.com'),
                 ),
               )..interceptors.addAll(
                   [
+                    InterceptorsWrapper(
+                      onRequest: (options, handler) async {
+                        try {
+                          // Ждем получения токена
+                          final access = await flutterSecureStorage.read(key: StorageKey.access);
+
+                          if (access != null) {
+                            final accessData = accessFromJson(access);
+                            // Добавляем токен в заголовки
+                            options.headers['Authorization'] = 'Bearer ${accessData.access}';
+                          }
+
+                          return handler.next(options);
+                        } catch (error) {
+                          return handler.reject(
+                            DioException(
+                              requestOptions: options,
+                              error: error,
+                              message: 'Ошибка при получении токена',
+                            ),
+                          );
+                        }
+                      },
+                    ),
                     PrettyDioLogger(
                         requestHeader: true,
                         requestBody: true,
@@ -120,6 +153,16 @@ abstract final class Runner {
             RepositoryProvider(create: (context) => packageInfoPlus),
 
             // --- Utisl --- //
+
+            // --- Leaderboard --- //
+
+            RepositoryProvider<LeaderboardRepository>(
+              create: (context) => LeaderboardRepositoryImpl(
+                dio: context.read<Dio>(),
+              ),
+            ),
+
+            // --- Leaderboard --- //
           ],
           child: MultiBlocProvider(
             providers: [
@@ -137,6 +180,12 @@ abstract final class Runner {
                       context.read<AuthorizationRepository>(),
                 ),
               ),
+              BlocProvider<LeaderboardBloc>(
+                  create: (context) => LeaderboardBloc(
+                    leaderboardRepository:
+                    RepositoryProvider.of<LeaderboardRepository>(context),
+                  )..add(GetLeaderboard()),
+              )
             ],
             child: RedCrescent(),
           ),
