@@ -11,14 +11,14 @@ class RedButton extends StatelessWidget {
   const RedButton({
     required this.title,
     required this.onPressed,
-    this.isLoading,
+    this.isLoading = false,
     super.key,
     this.btnColor,
   });
 
   final String title;
   final VoidCallback onPressed;
-  final bool? isLoading;
+  final bool isLoading;
   final Color? btnColor;
 
   @override
@@ -27,7 +27,7 @@ class RedButton extends StatelessWidget {
     final height = MediaQuery.sizeOf(context).height;
     final theme = Theme.of(context).extension<MyColor>()!;
     return FilledButton(
-      onPressed: isLoading == true ? null : onPressed,
+      onPressed: isLoading ? null : onPressed,
       style: Theme.of(context).filledButtonTheme.style!.copyWith(
             minimumSize: WidgetStatePropertyAll(
               Size(width, height * 0.05),
