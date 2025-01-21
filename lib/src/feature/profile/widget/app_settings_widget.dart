@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:red_crescent/src/core/theme/red_crescent_icon.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppSettingsWidget extends StatelessWidget {
   AppSettingsWidget({super.key});
@@ -8,6 +9,7 @@ class AppSettingsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).extension<SfPro>()!;
+    final l = AppLocalizations.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,9 +22,9 @@ class AppSettingsWidget extends StatelessWidget {
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: settings.length,
+          itemCount: _settings.length,
           itemBuilder: (context, index) {
-            final item = settings[index];
+            final item = _settings[index];
             return Padding(
               padding: const EdgeInsets.only(
                 bottom: 10.0,
@@ -50,7 +52,7 @@ class AppSettingsWidget extends StatelessWidget {
     );
   }
 
-  final settings = [
+  final _settings = [
     {'title': 'Настройки', 'onTap': () => print('Profile Settings')},
     {
       'title': 'Технический чат поддержки',

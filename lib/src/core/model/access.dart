@@ -48,6 +48,7 @@ class User {
   final String totalHours;
   final int xpPoints;
   final String? dateJoined;
+  final List<Achievement> achievements;
 
   User({
     required this.id,
@@ -64,6 +65,7 @@ class User {
     required this.xpPoints,
     this.profilePictureUrl,
     this.dateJoined,
+    required this.achievements,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -81,6 +83,10 @@ class User {
         totalHours: json["total_hours"],
         xpPoints: json["xp_points"] ?? 0,
         dateJoined: json["date_joined"],
+        achievements: (json["achievements"] as List<dynamic>?)
+                ?.map((e) => Achievement.fromJson(e))
+                .toList() ??
+            [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -98,10 +104,48 @@ class User {
         "xp_points": xpPoints,
         "profile_picture_url": profilePictureUrl,
         "date_joined": dateJoined,
+        "achievements": achievements.map((e) => e.toJson()).toList(),
       };
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, email: $email, isStaff: $isStaff, isActive: $isActive, firstName: $firstName, lastName: $lastName, gender: $gender, role: $role, phoneNumber: $phoneNumber, totalHours: $totalHours, xpPoints: $xpPoints,"profilePictureUrl:" $profilePictureUrl,"date_joined:"$dateJoined)';
+    return 'User(id: $id, username: $username, email: $email, isStaff: $isStaff, isActive: $isActive, firstName: $firstName, lastName: $lastName, gender: $gender, role: $role, phoneNumber: $phoneNumber, totalHours: $totalHours, xpPoints: $xpPoints,"profilePictureUrl:" $profilePictureUrl,"date_joined:"$dateJoined),achievements: $achievements';
+  }
+}
+
+class Achievement {
+  final int id;
+  final String name;
+  final String description;
+  final int criteriaHours;
+  final int criteriaTasks;
+
+  Achievement({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.criteriaHours,
+    required this.criteriaTasks,
+  });
+
+  factory Achievement.fromJson(Map<String, dynamic> json) => Achievement(
+        id: json["id"] ?? 0,
+        name: json["name"] ?? '',
+        description: json["description"] ?? '',
+        criteriaHours: json["criteria_hours"] ?? 0,
+        criteriaTasks: json["criteria_tasks"] ?? 0,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "criteria_hours": criteriaHours,
+        "criteria_tasks": criteriaTasks,
+      };
+
+  @override
+  String toString() {
+    return 'Achievement(id: $id, name: $name, description: $description, criteriaHours: $criteriaHours, criteriaTasks: $criteriaTasks)';
   }
 }

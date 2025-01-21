@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
+import 'package:red_crescent/src/feature/profile/widget/image_with_error_handling.dart';
 
 class ProfileDetails extends StatelessWidget {
   final dynamic user;
@@ -17,12 +18,8 @@ class ProfileDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(60),
-            child: CircleAvatar(
-              radius: 60,
-              child: Image.network(user.profilePictureUrl ?? ''),
-            ),
+          ImageWithErrorHandling(
+            imageUrl: user.profilePictureUrl ?? '',
           ),
           Text(
             user.lastName,

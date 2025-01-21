@@ -43,21 +43,6 @@ class ProfileStatistics extends StatelessWidget {
         _buildRowContent(
             theme, 'Общее время волонтерства', '${user.totalHours ?? 0} ч'),
         const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Text('Достижение', style: theme.s16W400),
-              ],
-            ),
-            Column(
-              children: [
-                Text('Достижение', style: theme.s16W400),
-              ],
-            ),
-          ],
-        ),
       ],
     );
   }
