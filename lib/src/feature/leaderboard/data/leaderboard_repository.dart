@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:red_crescent/src/core/enum/role_enum.dart';
+import 'package:red_crescent/src/core/model/role_enum.dart';
 import 'package:red_crescent/src/core/model/login_exception.dart';
 import 'package:red_crescent/src/feature/leaderboard/model/leaderboard.dart';
 

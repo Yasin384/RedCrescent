@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:red_crescent/src/core/enum/role_enum.dart';
+import 'package:red_crescent/src/core/model/role_enum.dart';
 
 // Helper functions for JSON conversion
 LeaderBoard LeaderBoardFromJson(String str) => LeaderBoard.fromJson(json.decode(str));

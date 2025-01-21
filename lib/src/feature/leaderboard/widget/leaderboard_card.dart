@@ -13,8 +13,8 @@ class LeaderboardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sfPro = Theme.of(context).extension<SfPro>()!;
-    final theme = Theme.of(context).extension<MyColor>()!;
-    final text = AppLocalizations.of(context);
+    final color = Theme.of(context).extension<MyColor>()!;
+    final l = AppLocalizations.of(context);
     return Row(
       children: [
         CircleAvatar(
@@ -23,10 +23,10 @@ class LeaderboardCard extends StatelessWidget {
             child: user.profilePictureUrl != null
                 ? BuildImage(user: user)
                 : Container(
-                    color: theme.grey,
+                    color: color.grey,
                     child: Icon(
                       Icons.person,
-                      color: theme.white,
+                      color: color.white,
                       size: 73,
                     ),
                   ),
@@ -37,11 +37,11 @@ class LeaderboardCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(user.username,
-                style: sfPro.s16W400.copyWith(color: theme.black)),
+                style: sfPro.s16W400.copyWith(color: color.black)),
             Text('${user.firstName} ${user.lastName}',
-                style: sfPro.s16W400.copyWith(color: theme.black)),
+                style: sfPro.s16W400.copyWith(color: color.black)),
             const SizedBox(height: 4),
-            Text('${text.totalHours} ${user.totalHours} ${text.hours}',
+            Text('${l.totalHours} ${user.totalHours} ${l.hours}',
                 style: sfPro.s16W400),
           ],
         )
@@ -49,4 +49,3 @@ class LeaderboardCard extends StatelessWidget {
     );
   }
 }
-

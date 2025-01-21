@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:red_crescent/src/core/model/page_tile.dart';
 import 'package:red_crescent/src/core/theme/my_color.dart';
 import 'package:red_crescent/src/core/theme/red_crescent_icon.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
@@ -27,19 +28,17 @@ class ShellWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final theme = Theme.of(context).extension<MyColor>();
-    final textTheme = Theme.of(context).extension<SfPro>();
+    final color = Theme.of(context).extension<MyColor>()!;
+    final sfPro = Theme.of(context).extension<SfPro>()!;
 
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: shell,
-            ),
-          ],
+      appBar: AppBar(
+        title: Text(
+          PageTile.fromValue(context, shell.currentIndex),
+          style: sfPro.s24W500,
         ),
       ),
+      body: SafeArea(child: shell),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _goBranch,
         type: BottomNavigationBarType.fixed,
@@ -62,10 +61,10 @@ class ShellWidget extends StatelessWidget {
             label: l.profile,
           ),
         ],
-        selectedIconTheme: IconThemeData(color: theme?.red),
-        unselectedLabelStyle: textTheme?.s10W400,
-        selectedLabelStyle: textTheme?.s10W400,
-        selectedItemColor: theme?.red,
+        selectedIconTheme: IconThemeData(color: color.red),
+        unselectedLabelStyle: sfPro.s10W400,
+        selectedLabelStyle: sfPro.s10W400,
+        selectedItemColor: color.red,
       ),
     );
   }

@@ -24,41 +24,32 @@ class LeaderboardScreen extends StatefulWidget {
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context);
-    final sfPro = Theme.of(context).extension<SfPro>()!;
-    final theme = Theme.of(context).extension<MyColor>()!;
+    final color = Theme.of(context).extension<MyColor>()!;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          text.leaderboard,
-          style: sfPro.s24W500,
-        ),
-      ),
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () {
-            context.read<LeaderboardBloc>().add(GetLeaderboard());
-            return Future.delayed(Duration(seconds: 2));
-          },
-          child: BlocBuilder<LeaderboardBloc, LeaderboardState>(
-            builder: (context, state) {
-              return switch (state) {
-                LeaderboardInitial() => const SizedBox(),
-                LeaderboardLoading() =>
-                  CustomCircularProgressIndicator(color: theme.red),
-                LeaderboardLoaded(userResponse: final users) =>
-                  _LeaderboardList(
-                    users: users,
-                  ),
-                LeaderboardError(message: final message) =>
-                  _LeaderboardError(message: message),
-              };
-            },
-          ),
-        ),
+    return RefreshIndicator(
+      color: color.red,
+      backgroundColor: color.white,
+      elevation: 0,
+      onRefresh: refresh,
+      child: BlocBuilder<LeaderboardBloc, LeaderboardState>(
+        builder: (context, state) {
+          return switch (state) {
+            LeaderboardInitial() => const SizedBox(),
+            LeaderboardLoading() =>
+              CustomCircularProgressIndicator(color: color.red),
+            LeaderboardLoaded(userResponse: final users) =>
+              _LeaderboardList(users: users),
+            LeaderboardError(message: final message) =>
+              _LeaderboardError(message: message),
+          };
+        },
       ),
     );
+  }
+
+  Future<void> refresh() {
+    context.read<LeaderboardBloc>().add(GetLeaderboard());
+    return Future.delayed(const Duration(seconds: 0));
   }
 }
 

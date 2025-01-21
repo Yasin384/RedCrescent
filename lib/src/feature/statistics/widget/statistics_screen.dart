@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:red_crescent/src/core/theme/my_color.dart';
+// import 'package:red_crescent/src/core/theme/my_color.dart';
 
 /// {@template statistics_screen}
 /// StatisticsScreen widget.
@@ -54,7 +54,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final myColor = Theme.of(context).extension<MyColor>()!;
-    return ColoredBox(color: myColor.red);
+    // final myColor = Theme.of(context).extension<MyColor>()!;
+    return SizedBox();
   }
 }
