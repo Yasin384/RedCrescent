@@ -36,11 +36,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(LoginCompleted());
     } on LoginException catch (error, stackTrace) {
       emit(LoginError(loginException: error));
+      emit(LoginCompleted());
       onError(error, stackTrace);
       rethrow;
     } on Object catch (error, stackTrace) {
       Error.safeToString(error);
       stackTrace.toString();
+      emit(LoginCompleted());
       onError(error, stackTrace);
       rethrow;
     } finally {
