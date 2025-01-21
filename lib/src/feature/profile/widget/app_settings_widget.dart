@@ -15,7 +15,7 @@ class AppSettingsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Настройки приложения',
+       l.settings_app,
           style: theme.s16W500,
         ),
         const SizedBox(height: 16),

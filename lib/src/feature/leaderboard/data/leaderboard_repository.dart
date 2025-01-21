@@ -1,17 +1,13 @@
-
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:red_crescent/src/core/enum/role_enum.dart';
 import 'package:red_crescent/src/core/model/login_exception.dart';
 import 'package:red_crescent/src/feature/leaderboard/model/leaderboard.dart';
 
 abstract interface class LeaderboardRepository {
-
   Future<LeaderBoard> getLeaderboard();
 }
 
-final class LeaderboardRepositoryImpl implements LeaderboardRepository{
+final class LeaderboardRepositoryImpl implements LeaderboardRepository {
   const LeaderboardRepositoryImpl({
     required dio,
   }) : _dio = dio;
@@ -24,7 +20,7 @@ final class LeaderboardRepositoryImpl implements LeaderboardRepository{
       final response = await _dio.get('/api/users/');
       final leaderboard = LeaderBoard.fromJson(response.data);
       final sortedLeaderboard = _sortLeaderboard(leaderboard.results);
-      return LeaderBoard(count: leaderboard.count, results:sortedLeaderboard );
+      return LeaderBoard(count: leaderboard.count, results: sortedLeaderboard);
     } on DioException catch (error, stackTrace) {
       Error.throwWithStackTrace(
         LoginException.fromStatusCode(error.response?.statusCode ?? 0),
@@ -38,11 +34,11 @@ final class LeaderboardRepositoryImpl implements LeaderboardRepository{
   }
 
   List<UserResult> _sortLeaderboard(List<UserResult> users) {
-    return users.where((user) => user.role == Role.volunteer).toList()..sort((a, b) {
-      final aHours = a.totalHours;
-      final bHours = b.totalHours;
-      return bHours.compareTo(aHours);
-    });
+    return users.where((user) => user.role == Role.volunteer).toList()
+      ..sort((a, b) {
+        final aHours = a.totalHours;
+        final bHours = b.totalHours;
+        return bHours.compareTo(aHours);
+      });
   }
-
 }

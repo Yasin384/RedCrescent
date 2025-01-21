@@ -5,8 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:red_crescent/src/core/constans/storage_key.dart';
-import 'package:red_crescent/src/core/model/access.dart';
 import 'package:red_crescent/src/core/util/token_interceptor.dart';
 import 'package:red_crescent/src/feature/app/widget/red_crescent.dart';
 import 'package:red_crescent/src/feature/auth/authorization/bloc/authorization_bloc.dart';
@@ -82,34 +80,13 @@ abstract final class Runner {
                   receiveDataWhenStatusError: true,
                   receiveTimeout: const Duration(seconds: 5),
                   connectTimeout: const Duration(seconds: 3),
-                  baseUrl: const String.fromEnvironment('BASEURL', defaultValue: 'https://redcresent22.onrender.com'),
+                  baseUrl: const String.fromEnvironment('BASEURL',
+                      defaultValue: 'https://redcresent22.onrender.com'),
                 ),
               )..interceptors.addAll(
                   [
-                    InterceptorsWrapper(
-                      onRequest: (options, handler) async {
-                        try {
-                          // Ждем получения токена
-                          final access = await flutterSecureStorage.read(key: StorageKey.access);
-
-                          if (access != null) {
-                            final accessData = accessFromJson(access);
-                            // Добавляем токен в заголовки
-                            options.headers['Authorization'] = 'Bearer ${accessData.access}';
-                          }
-
-                          return handler.next(options);
-                        } catch (error) {
-                          return handler.reject(
-                            DioException(
-                              requestOptions: options,
-                              error: error,
-                              message: 'Ошибка при получении токена',
-                            ),
-                          );
-                        }
-                      },
-                    ),
+                    TokenInterceptor(
+                        flutterSecureStorage: flutterSecureStorage),
                     PrettyDioLogger(
                         requestHeader: true,
                         requestBody: true,
@@ -181,10 +158,10 @@ abstract final class Runner {
                 ),
               ),
               BlocProvider<LeaderboardBloc>(
-                  create: (context) => LeaderboardBloc(
-                    leaderboardRepository:
-                    RepositoryProvider.of<LeaderboardRepository>(context),
-                  )..add(GetLeaderboard()),
+                create: (context) => LeaderboardBloc(
+                  leaderboardRepository:
+                      RepositoryProvider.of<LeaderboardRepository>(context),
+                )..add(GetLeaderboard()),
               )
             ],
             child: RedCrescent(),

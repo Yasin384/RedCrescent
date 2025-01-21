@@ -8,23 +8,25 @@ part 'leaderboard_state.dart';
 part 'leaderboard_event.dart';
 
 class LeaderboardBloc extends Bloc<LeaderboardEvent, LeaderboardState> {
-  LeaderboardBloc({
-    required LeaderboardRepository leaderboardRepository
-}) : _leaderboardRepository = leaderboardRepository, super(LeaderboardInitial()) {
-    on<LeaderboardEvent> ((event, emit) => switch(event) {
-      GetLeaderboard() => _onGetLoadUsers(event, emit),
-    });
+  LeaderboardBloc({required LeaderboardRepository leaderboardRepository})
+      : _leaderboardRepository = leaderboardRepository,
+        super(LeaderboardInitial()) {
+    on<LeaderboardEvent>((event, emit) => switch (event) {
+          GetLeaderboard() => _onGetLoadUsers(event, emit),
+        });
   }
 
   final LeaderboardRepository _leaderboardRepository;
 
-  Future<void> _onGetLoadUsers(GetLeaderboard event, Emitter<LeaderboardState> emit) async {
+  Future<void> _onGetLoadUsers(
+      GetLeaderboard event, Emitter<LeaderboardState> emit) async {
     try {
       emit(LeaderboardLoading());
       final leaderboard = await _leaderboardRepository.getLeaderboard();
       emit(LeaderboardLoaded(leaderboard));
     } on LoginException catch (error, stackTrace) {
       emit(LeaderboardError('Ошибка авторизации: ${error.statusCode}'));
+      onError(error, stackTrace);
     } on Object catch (error, stackTrace) {
       emit(LeaderboardError('Произошла ошибка при загрузке данных'));
       onError(error, stackTrace);
@@ -32,6 +34,4 @@ class LeaderboardBloc extends Bloc<LeaderboardEvent, LeaderboardState> {
       // ...
     }
   }
-
 }
-

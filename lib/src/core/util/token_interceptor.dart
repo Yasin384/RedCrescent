@@ -18,9 +18,9 @@ final class TokenInterceptor extends Interceptor {
     final access = await _flutterSecureStorage.read(key: StorageKey.access);
 
     if (access != null && access.isNotEmpty) {
-      options.data['Authorization'] = 'Bearer ${accessFromJson(access).access}';
-      handler.next(options);
+      options.headers['Authorization'] =
+          'Bearer ${accessFromJson(access).access}';
     }
-    handler.next(options);
+    return handler.next(options);
   }
 }
