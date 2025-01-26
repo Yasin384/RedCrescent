@@ -28,5 +28,7 @@
   "totalHours": "общее время волонтерства",
   "hours": "ч",
   "exit": "Выход",
-  "achievements": "Достижения"
+  "achievements": "Достижения",
+  "datePublication": "Дата публикации",
+  "when": "Когда"
 }

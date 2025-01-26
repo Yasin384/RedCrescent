@@ -5,6 +5,8 @@ import 'package:red_crescent/src/core/model/page_tile.dart';
 import 'package:red_crescent/src/core/theme/my_color.dart';
 import 'package:red_crescent/src/core/theme/red_crescent_icon.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
+import 'package:red_crescent/src/feature/tasks/widget/task_details_screen.dart';
+import 'package:red_crescent/src/feature/tasks/widget/tasks_screen.dart';
 
 /// {@template shell_widget}
 /// ShellWidget widget.
@@ -31,8 +33,14 @@ class ShellWidget extends StatelessWidget {
     final color = Theme.of(context).extension<MyColor>()!;
     final sfPro = Theme.of(context).extension<SfPro>()!;
 
+    final currentLocation = GoRouterState.of(context).uri.toString();
+    final isOnDetailsPage = currentLocation.contains(TaskDetailsScreen.routePath);
+
+
     return Scaffold(
-      appBar: AppBar(
+      appBar:  isOnDetailsPage
+          ? null
+          : AppBar(
         title: Text(
           PageTile.fromValue(context, shell.currentIndex),
           style: sfPro.s24W500,

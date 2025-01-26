@@ -13,6 +13,8 @@ import 'package:red_crescent/src/feature/auth/login/bloc/login_bloc.dart';
 import 'package:red_crescent/src/feature/auth/login/data/login_repository.dart';
 import 'package:red_crescent/src/feature/leaderboard/bloc/leaderboard_bloc.dart';
 import 'package:red_crescent/src/feature/leaderboard/data/leaderboard_repository.dart';
+import 'package:red_crescent/src/feature/tasks/bloc/tasks_bloc.dart';
+import 'package:red_crescent/src/feature/tasks/data/task_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:stack_trace/stack_trace.dart';
@@ -81,7 +83,7 @@ abstract final class Runner {
                   // receiveTimeout: const Duration(seconds: 5),
                   // connectTimeout: const Duration(seconds: 3),
                   baseUrl: const String.fromEnvironment('BASEURL',
-                      defaultValue: 'https://redcresent22.onrender.com'),
+                      defaultValue: 'https://red-crescent-production.up.railway.app'),
                 ),
               )..interceptors.addAll(
                   [
@@ -138,8 +140,11 @@ abstract final class Runner {
                 dio: context.read<Dio>(),
               ),
             ),
-
             // --- Leaderboard --- //
+
+            // --- Theme --- //
+            RepositoryProvider<TaskRepository>(create: (context) => TaskRepositoryImpl(dio: context.read<Dio>())),
+            // --- Theme --- //
           ],
           child: MultiBlocProvider(
             providers: [
@@ -162,7 +167,13 @@ abstract final class Runner {
                   leaderboardRepository:
                       RepositoryProvider.of<LeaderboardRepository>(context),
                 )..add(GetLeaderboard()),
-              )
+              ),
+
+              BlocProvider<TasksBloc>(
+                create: (context) => TasksBloc(
+                  tasksRepository: RepositoryProvider.of<TaskRepository>(context),
+                )..add(GetTasks()),
+              ),
             ],
             child: RedCrescent(),
           ),

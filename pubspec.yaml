@@ -37,11 +37,22 @@ dependencies:
 
   # For using [ThemeExtension]
   theme_tailor_annotation: ^3.0.1
+
+  # For using [SvgPicture]
   flutter_svg: ^2.0.17
+
+  # For using [FlutterSecureStorage]
   flutter_secure_storage: ^4.2.1
+
+  # For using [Equatable]
   equatable: ^2.0.7
-  package_info_plus: ^8.1.3
+
+  # For using [PackageInfo]
   package_info: ^2.0.2
+  package_info_plus: ^8.1.3
+
+  # Image
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:

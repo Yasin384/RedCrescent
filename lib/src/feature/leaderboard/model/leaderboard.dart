@@ -51,7 +51,7 @@ class UserResult {
   final String? gender;
   final Role role;
   final String? phoneNumber;
-  final String totalHours;
+  final double totalHours;
   final int xpPoints;
   final int? profilePictureWidth;
   final int? profilePictureHeight;
