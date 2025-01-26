@@ -6,7 +6,6 @@ import 'package:red_crescent/src/core/theme/my_color.dart';
 import 'package:red_crescent/src/core/theme/red_crescent_icon.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
 import 'package:red_crescent/src/feature/tasks/widget/task_details_screen.dart';
-import 'package:red_crescent/src/feature/tasks/widget/tasks_screen.dart';
 
 /// {@template shell_widget}
 /// ShellWidget widget.

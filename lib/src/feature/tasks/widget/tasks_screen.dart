@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:red_crescent/src/core/constans/spacing.dart';
 import 'package:red_crescent/src/core/theme/my_color.dart';
 import 'package:red_crescent/src/core/widget/custom_circular_progress_indicator.dart';
 import 'package:red_crescent/src/core/widget/error_screen.dart';
 import 'package:red_crescent/src/feature/tasks/bloc/tasks_bloc.dart';
 import 'package:red_crescent/src/feature/tasks/model/task.dart';
-import 'package:red_crescent/src/feature/tasks/widget/task_details_screen.dart';
 import 'package:red_crescent/src/feature/tasks/widget/tasks_card.dart';
 
 /// {@template tasks_screen}
@@ -67,8 +65,8 @@ class _TasksScreenState extends State<TasksScreen> {
 class _TasksScreen extends StatelessWidget {
   /// {@macro tasks_screen}
   const _TasksScreen({
-    super.key,
-    required this.tasks, // ignore: unused_element
+    required this.tasks,
+    super.key, // ignore: unused_element
   });
 
   final Tasks tasks;
@@ -79,26 +77,9 @@ class _TasksScreen extends StatelessWidget {
     return ListView.separated(
       padding: Spacing.h16V12,
       separatorBuilder: (context, index) => const SizedBox(height: 40),
-      itemBuilder: (context, index) => GestureDetector(
-        onTap: () => _pushToTasksDetails(context, tasks.results[index]),
-        child: TasksCard(taskResult: tasks.results[index]),
-      ),
+      itemBuilder: (context, index) =>
+          TasksCard(taskResult: tasks.results[index]),
       itemCount: tasks.results.length,
     );
-    //   Center(
-    //   child: ElevatedButton(
-    //       onPressed: () {
-    //         RepositoryProvider.of<TaskRepository>(context).loadTask();
-    //       },
-    //       child: const Text('load task')),
-    // );
   }
-
-}
-
-void _pushToTasksDetails(BuildContext context, TaskResult taskResult) {
-  context.go(
-    '${TasksScreen.routePath}/${TaskDetailsScreen.routePath}',
-    extra: taskResult, // Передаем сам объект
-  );
 }

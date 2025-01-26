@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:red_crescent/src/core/constans/spacing.dart';
 import 'package:red_crescent/src/core/theme/my_color.dart';
-import 'package:red_crescent/src/core/theme/sf_pro.dart';
 import 'package:red_crescent/src/core/widget/custom_circular_progress_indicator.dart';
 import 'package:red_crescent/src/core/widget/error_screen.dart';
-import 'package:red_crescent/src/core/widget/red_buton.dart';
 import 'package:red_crescent/src/feature/leaderboard/bloc/leaderboard_bloc.dart';
 import 'package:red_crescent/src/feature/leaderboard/model/leaderboard.dart';
 import 'package:red_crescent/src/feature/leaderboard/widget/leaderboard_card.dart';
@@ -40,7 +37,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               CustomCircularProgressIndicator(color: color.red),
             LeaderboardLoaded(userResponse: final users) =>
               _LeaderboardList(users: users),
-            LeaderboardError(message: final message) => ErrorScreen(message: message, onTap: onRetry),
+            LeaderboardError(message: final message) => ErrorScreen(
+                message: message,
+                onTap: onRetry,
+              ),
           };
         },
       ),

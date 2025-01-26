@@ -66,16 +66,6 @@ final appRouter = GoRouter(
               pageBuilder: (context, state) {
                 return NoTransitionPage(child: TasksScreen());
               },
-              routes: [
-                GoRoute(
-                  path: TaskDetailsScreen.routePath,
-                  builder: (context, state) {
-                    final taskResult = state.extra as TaskResult;
-                    return TaskDetailsScreen(taskResult: taskResult);
-                  },
-                  // pageBuilder: ;
-                ),
-              ],
             ),
           ],
         ),
@@ -92,6 +82,12 @@ final appRouter = GoRouter(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      path: TaskDetailsScreen.routePath,
+      builder: (context, state) {
+        return TaskDetailsScreen(taskResult: state.extra as TaskResult);
+      },
     ),
   ],
   observers: [

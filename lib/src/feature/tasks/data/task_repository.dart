@@ -24,7 +24,7 @@ final class TaskRepositoryImpl implements TaskRepository {
   Future<Tasks> loadTask() async {
     try {
       final response = await _dio.get('/api/tasks/', queryParameters: {
-        'page': 2,
+        'page': 1,
       });
       return Tasks.fromJson(response.data);
     } on DioException catch (error, stackTrace) {
@@ -33,10 +33,7 @@ final class TaskRepositoryImpl implements TaskRepository {
         stackTrace,
       );
     } on Object catch (error, stackTrace) {
-      Error.safeToString(error);
-      stackTrace.toString();
       Error.throwWithStackTrace(error, stackTrace);
     }
-
   }
 }
