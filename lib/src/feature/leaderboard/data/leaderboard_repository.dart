@@ -17,7 +17,7 @@ final class LeaderboardRepositoryImpl implements LeaderboardRepository {
   @override
   Future<LeaderBoard> getLeaderboard() async {
     try {
-      final response = await _dio.get('/api/users/');
+      final response = await _dio.get('https://red-crescent-production.up.railway.app/api/users/');
       final leaderboard = LeaderBoard.fromJson(response.data);
       final sortedLeaderboard = _sortLeaderboard(leaderboard.results);
       return LeaderBoard(count: leaderboard.count, results: sortedLeaderboard);

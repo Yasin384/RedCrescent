@@ -45,7 +45,7 @@ class User {
   final String? gender;
   final String? role;
   final String? phoneNumber;
-  final String totalHours;
+  final double totalHours;
   final int xpPoints;
   final String? dateJoined;
   final List<Achievement> achievements;

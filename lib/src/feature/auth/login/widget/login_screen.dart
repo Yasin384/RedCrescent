@@ -89,7 +89,7 @@ class __LoginScreenState extends State<_LoginScreen> {
         return Scaffold(
           body: SafeArea(
             child: Padding(
-              padding: Spacing.h14,
+              padding: Spacing.h16,
               child: Column(
                 children: <Widget>[
                   Align(

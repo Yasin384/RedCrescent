@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:red_crescent/src/core/model/login_exception.dart';
+import 'package:red_crescent/src/feature/tasks/model/task.dart';
 
 /// {@template task_repository}
 /// TaskRepository.
@@ -6,7 +8,7 @@ import 'package:dio/dio.dart';
 abstract interface class TaskRepository {
   /// {@macro task_repository}
 
-  Future<void> loadTask();
+  Future<Tasks> loadTask();
 }
 
 /// {@template task_repository}
@@ -19,7 +21,22 @@ final class TaskRepositoryImpl implements TaskRepository {
   final Dio _dio;
 
   @override
-  Future<void> loadTask() async {
-    await _dio.get('/api/events/');
+  Future<Tasks> loadTask() async {
+    try {
+      final response = await _dio.get('/api/tasks/', queryParameters: {
+        'page': 2,
+      });
+      return Tasks.fromJson(response.data);
+    } on DioException catch (error, stackTrace) {
+      Error.throwWithStackTrace(
+        LoginException.fromStatusCode(error.response?.statusCode ?? 0),
+        stackTrace,
+      );
+    } on Object catch (error, stackTrace) {
+      Error.safeToString(error);
+      stackTrace.toString();
+      Error.throwWithStackTrace(error, stackTrace);
+    }
+
   }
 }

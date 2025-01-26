@@ -5,6 +5,8 @@ import 'package:red_crescent/src/feature/leaderboard/widget/leaderboard_screen.d
 import 'package:red_crescent/src/feature/profile/widget/profile_screen.dart';
 
 import 'package:red_crescent/src/feature/statistics/widget/statistics_screen.dart';
+import 'package:red_crescent/src/feature/tasks/model/task.dart';
+import 'package:red_crescent/src/feature/tasks/widget/task_details_screen.dart';
 import 'package:red_crescent/src/feature/tasks/widget/tasks_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -64,6 +66,16 @@ final appRouter = GoRouter(
               pageBuilder: (context, state) {
                 return NoTransitionPage(child: TasksScreen());
               },
+              routes: [
+                GoRoute(
+                  path: TaskDetailsScreen.routePath,
+                  builder: (context, state) {
+                    final taskResult = state.extra as TaskResult;
+                    return TaskDetailsScreen(taskResult: taskResult);
+                  },
+                  // pageBuilder: ;
+                ),
+              ],
             ),
           ],
         ),
@@ -80,7 +92,7 @@ final appRouter = GoRouter(
           ],
         ),
       ],
-    )
+    ),
   ],
   observers: [
     // --- Router observer --- //

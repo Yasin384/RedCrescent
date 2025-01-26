@@ -5,6 +5,7 @@ import 'package:red_crescent/src/core/constans/spacing.dart';
 import 'package:red_crescent/src/core/theme/my_color.dart';
 import 'package:red_crescent/src/core/theme/sf_pro.dart';
 import 'package:red_crescent/src/core/widget/custom_circular_progress_indicator.dart';
+import 'package:red_crescent/src/core/widget/error_screen.dart';
 import 'package:red_crescent/src/core/widget/red_buton.dart';
 import 'package:red_crescent/src/feature/leaderboard/bloc/leaderboard_bloc.dart';
 import 'package:red_crescent/src/feature/leaderboard/model/leaderboard.dart';
@@ -39,55 +40,20 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               CustomCircularProgressIndicator(color: color.red),
             LeaderboardLoaded(userResponse: final users) =>
               _LeaderboardList(users: users),
-            LeaderboardError(message: final message) =>
-              _LeaderboardError(message: message),
+            LeaderboardError(message: final message) => ErrorScreen(message: message, onTap: onRetry),
           };
         },
       ),
     );
   }
 
+  void onRetry() {
+    context.read<LeaderboardBloc>().add(GetLeaderboard());
+  }
+
   Future<void> refresh() {
     context.read<LeaderboardBloc>().add(GetLeaderboard());
     return Future.delayed(const Duration(seconds: 0));
-  }
-}
-
-class _LeaderboardError extends StatelessWidget {
-  const _LeaderboardError({
-    required this.message,
-  });
-
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    final sfPro = Theme.of(context).extension<SfPro>()!;
-    final theme = Theme.of(context).extension<MyColor>()!;
-    final text = AppLocalizations.of(context);
-    return Padding(
-      padding: Spacing.h16V12,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              message,
-              style: sfPro.s16W400.copyWith(
-                color: theme.black,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            RedButton(
-                title: text.tryAgain,
-                onPressed: () {
-                  context.read<LeaderboardBloc>().add(GetLeaderboard());
-                })
-          ],
-        ),
-      ),
-    );
   }
 }
 

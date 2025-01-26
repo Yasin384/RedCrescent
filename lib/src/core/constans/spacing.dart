@@ -9,7 +9,7 @@ abstract final class Spacing {
 
   static const h10 = EdgeInsets.symmetric(horizontal: 10.0);
 
-  static const h14 = EdgeInsets.symmetric(horizontal: 14.0);
+  static const h16 = EdgeInsets.symmetric(horizontal: 16.0);
 
   static const h16V12 = EdgeInsets.symmetric(horizontal: 16, vertical: 12);
 }
