@@ -8,7 +8,7 @@ import 'package:red_crescent/src/feature/tasks/model/task.dart';
 abstract interface class TaskRepository {
   /// {@macro task_repository}
 
-  Future<Tasks> loadTask();
+  Future<Tasks> loadTask(int page);
 }
 
 /// {@template task_repository}
@@ -21,10 +21,10 @@ final class TaskRepositoryImpl implements TaskRepository {
   final Dio _dio;
 
   @override
-  Future<Tasks> loadTask() async {
+  Future<Tasks> loadTask(int page) async {
     try {
       final response = await _dio.get('/api/tasks/', queryParameters: {
-        'page': 1,
+        'page': page,
       });
       return Tasks.fromJson(response.data);
     } on DioException catch (error, stackTrace) {
@@ -33,6 +33,8 @@ final class TaskRepositoryImpl implements TaskRepository {
         stackTrace,
       );
     } on Object catch (error, stackTrace) {
+      Error.safeToString(error);
+      stackTrace.toString();
       Error.throwWithStackTrace(error, stackTrace);
     }
   }

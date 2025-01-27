@@ -30,5 +30,9 @@
   "exit": "Выход",
   "achievements": "Достижения",
   "datePublication": "Дата публикации",
-  "when": "Когда"
+  "when": "Когда",
+  "requiredPeople": "Сколько нужно людей",
+  "where": "Где",
+  "coordinatorThisTask": "Координатор этой задачи",
+  "participate": "Участвовать"
 }
