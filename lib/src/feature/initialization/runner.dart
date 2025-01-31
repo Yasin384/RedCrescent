@@ -172,7 +172,7 @@ abstract final class Runner {
               BlocProvider<TasksBloc>(
                 create: (context) => TasksBloc(
                   tasksRepository: RepositoryProvider.of<TaskRepository>(context),
-                )..add(GetTasks()),
+                )..add(GetTasks(isInitial: true)),
               ),
             ],
             child: RedCrescent(),

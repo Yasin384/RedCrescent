@@ -32,14 +32,8 @@ class ShellWidget extends StatelessWidget {
     final color = Theme.of(context).extension<MyColor>()!;
     final sfPro = Theme.of(context).extension<SfPro>()!;
 
-    final currentLocation = GoRouterState.of(context).uri.toString();
-    final isOnDetailsPage = currentLocation.contains(TaskDetailsScreen.routePath);
-
-
     return Scaffold(
-      appBar:  isOnDetailsPage
-          ? null
-          : AppBar(
+      appBar: AppBar(
         title: Text(
           PageTile.fromValue(context, shell.currentIndex),
           style: sfPro.s24W500,
