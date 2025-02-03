@@ -6,7 +6,7 @@ import 'package:red_crescent/src/feature/profile/widget/profile_screen.dart';
 
 import 'package:red_crescent/src/feature/statistics/widget/statistics_screen.dart';
 import 'package:red_crescent/src/feature/tasks/model/task.dart';
-import 'package:red_crescent/src/feature/tasks/widget/task_details_screen.dart';
+import 'package:red_crescent/src/feature/tasks/task_datails/widget/task_details_screen.dart';
 import 'package:red_crescent/src/feature/tasks/widget/tasks_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');

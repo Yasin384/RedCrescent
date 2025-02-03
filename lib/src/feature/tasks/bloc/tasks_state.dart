@@ -3,6 +3,11 @@ part of 'tasks_bloc.dart';
 sealed class TasksState extends Equatable {
   const TasksState();
 
+  bool get isLoginInProgress => switch (this) {
+    TasksLoading _ => true,
+    _ => false,
+  };
+
   @override
   List<Object?> get props => [];
 }
@@ -47,3 +52,4 @@ final class TasksError extends TasksState {
   @override
   List<Object?> get props => [message];
 }
+

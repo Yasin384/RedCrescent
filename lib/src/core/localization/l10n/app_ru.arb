@@ -34,5 +34,9 @@
   "requiredPeople": "Сколько нужно людей",
   "where": "Где",
   "coordinatorThisTask": "Координатор этой задачи",
-  "participate": "Участвовать"
+  "participate": "Участвовать",
+  "locationNotSpecified": "Локация не указана",
+  "joinedTheTask": "Вы присоединились к задаче",
+  "coordinatorNotSpecified": "Координатор не указан",
+  "leaveTheTask": "Покинуть"
 }

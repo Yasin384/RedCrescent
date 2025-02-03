@@ -13,3 +13,4 @@ final class GetTasks extends TasksEvent {
   @override
   List<Object> get props => [isInitial];
 }
+

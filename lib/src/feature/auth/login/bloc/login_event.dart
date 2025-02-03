@@ -7,13 +7,6 @@ sealed class LoginEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class LogoutRequested extends LoginEvent {
-  const LogoutRequested();
-
-  @override
-  List<Object> get props => [];
-}
-
 final class Logged extends LoginEvent {
   const Logged({required this.userCredentialDto});
 

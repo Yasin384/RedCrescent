@@ -56,6 +56,7 @@ class TaskResult {
   final Coordinator? coordinator; // Изменено на Coordinator
   final List<dynamic> assignedVolunteers;
   final String? location; // Добавлено поле location
+  final int? volunteerLimit;
 
   TaskResult({
     required this.id,
@@ -71,6 +72,7 @@ class TaskResult {
     this.coordinator,
     required this.assignedVolunteers,
     this.location,
+    this.volunteerLimit
   });
 
   factory TaskResult.fromJson(Map<String, dynamic> json) => TaskResult(
@@ -87,6 +89,7 @@ class TaskResult {
     coordinator: json["coordinator"] != null ? Coordinator.fromJson(json["coordinator"]) : null, // Обработка null для координатора
     assignedVolunteers: List<dynamic>.from(json["assigned_volunteers"] ?? []),
     location: json["location"], // Если location отсутствует, будет null
+    volunteerLimit: json["volunteer_limit"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -103,6 +106,7 @@ class TaskResult {
     "coordinator": coordinator?.toJson(), // Если координатор есть, возвращаем его JSON
     "assigned_volunteers": List<dynamic>.from(assignedVolunteers.map((x) => x)),
     "location": location, // Добавлено поле location
+    "volunteer_limit": volunteerLimit,
   };
 }
 

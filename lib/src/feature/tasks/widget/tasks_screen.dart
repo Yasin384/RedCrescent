@@ -7,7 +7,7 @@ import 'package:red_crescent/src/core/widget/custom_circular_progress_indicator.
 import 'package:red_crescent/src/core/widget/error_screen.dart';
 import 'package:red_crescent/src/feature/tasks/bloc/tasks_bloc.dart';
 import 'package:red_crescent/src/feature/tasks/model/task.dart';
-import 'package:red_crescent/src/feature/tasks/widget/task_details_screen.dart';
+import 'package:red_crescent/src/feature/tasks/task_datails/widget/task_details_screen.dart';
 import 'package:red_crescent/src/feature/tasks/widget/tasks_card.dart';
 
 /// {@template tasks_screen}

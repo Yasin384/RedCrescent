@@ -24,10 +24,16 @@ class CustomErrorDialog extends StatelessWidget {
   }) {
     showDialog<void>(
       context: context,
-      builder: (BuildContext context) => CustomErrorDialog(
+      builder: (BuildContext dialogContext) => CustomErrorDialog(
         error: error,
-        onRetry: onRetry,
-        onHelp: onHelp,
+        onRetry: () {
+          Navigator.of(dialogContext).pop(); // закрываем диалог
+          onRetry(); // выполняем дополнительную логику, если нужно
+        },
+        onHelp: () {
+          Navigator.of(dialogContext).pop(); // закрываем диалог
+          onHelp(); // выполняем дополнительную логику, если нужно
+        },
       ),
     );
   }
@@ -69,16 +75,12 @@ class CustomErrorDialog extends StatelessWidget {
               width: double.infinity,
               child: RedButton(
                 title: l.tryAgain,
-                onPressed: () {
-                  onRetry();
-                },
+                onPressed: onRetry,
               ),
             ),
             const SizedBox(height: 12),
             TextButton(
-              onPressed: () {
-                onHelp();
-              },
+              onPressed: onHelp,
               child: Text(
                 l.help,
                 style: textTheme.s18W600.copyWith(

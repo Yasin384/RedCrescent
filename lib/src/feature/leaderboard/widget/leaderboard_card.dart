@@ -36,7 +36,7 @@ class LeaderboardCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(user.username,
+            Text(user.username ?? '',
                 style: sfPro.s16W400.copyWith(color: color.black)),
             Text('${user.firstName} ${user.lastName}',
                 style: sfPro.s16W400.copyWith(color: color.black)),

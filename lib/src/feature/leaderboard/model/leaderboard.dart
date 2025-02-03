@@ -38,40 +38,40 @@ class UserResult {
   final int id;
   final String? profilePictureUrl;
   final List<Achievement> achievements;
-  final String password;
+  final String? password;
   final String? lastLogin;
-  final bool isSuperuser;
-  final String username;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final bool isStaff;
-  final bool isActive;
-  final DateTime dateJoined;
+  final bool? isSuperuser;
+  final String? username;
+  final String? firstName;
+  final String? lastName;
+  final String? email;
+  final bool? isStaff;
+  final bool? isActive;
+  final DateTime? dateJoined;
   final String? gender;
   final Role role;
   final String? phoneNumber;
   final double totalHours;
-  final int xpPoints;
+  final int? xpPoints;
   final int? profilePictureWidth;
   final int? profilePictureHeight;
-  final List<dynamic> groups;
-  final List<dynamic> userPermissions;
+  final List<dynamic>? groups;
+  final List<dynamic>? userPermissions;
 
   UserResult({
     required this.id,
     this.profilePictureUrl,
     required this.achievements,
-    required this.password,
+     this.password,
     this.lastLogin,
-    required this.isSuperuser,
-    required this.username,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.isStaff,
-    required this.isActive,
-    required this.dateJoined,
+     this.isSuperuser,
+     this.username,
+     this.firstName,
+     this.lastName,
+     this.email,
+     this.isStaff,
+     this.isActive,
+     this.dateJoined,
     this.gender,
     Role? role,
     this.phoneNumber,
@@ -97,16 +97,16 @@ class UserResult {
     email: json["email"],
     isStaff: json["is_staff"],
     isActive: json["is_active"],
-    dateJoined: DateTime.parse(json["date_joined"]),
+    dateJoined: json["date_joined"] != null ? DateTime.parse(json["date_joined"]) : null,
     gender: json["gender"],
-    role: Role.fromString(json["role"]),
+    role: json["role"] != null ? Role.fromString(json["role"]) : Role.admin,
     phoneNumber: json["phone_number"],
     totalHours: json["total_hours"],
     xpPoints: json["xp_points"],
     profilePictureWidth: json["profile_picture_width"],
     profilePictureHeight: json["profile_picture_height"],
-    groups: List<dynamic>.from(json["groups"]),
-    userPermissions: List<dynamic>.from(json["user_permissions"]),
+    groups: List<dynamic>.from(json["groups"] ?? []),
+    userPermissions: List<dynamic>.from(json["user_permissions"] ?? []),
   );
 
   Map<String, dynamic> toJson() => {
@@ -122,7 +122,7 @@ class UserResult {
     "email": email,
     "is_staff": isStaff,
     "is_active": isActive,
-    "date_joined": dateJoined.toIso8601String(),
+    "date_joined": dateJoined?.toIso8601String(),
     "gender": gender,
     "role": role,
     "phone_number": phoneNumber,
@@ -130,8 +130,8 @@ class UserResult {
     "xp_points": xpPoints,
     "profile_picture_width": profilePictureWidth,
     "profile_picture_height": profilePictureHeight,
-    "groups": List<dynamic>.from(groups),
-    "user_permissions": List<dynamic>.from(userPermissions),
+    "groups": List<dynamic>.from(groups ?? []),
+    "user_permissions": List<dynamic>.from(userPermissions ?? []),
   };
 }
 
