@@ -6,7 +6,7 @@ import 'package:red_crescent/src/core/theme/sf_pro.dart';
 import 'package:red_crescent/src/core/widget/title_with_value_row.dart';
 import 'package:red_crescent/src/feature/tasks/model/task.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:red_crescent/src/feature/tasks/widget/task_details_screen.dart';
+import 'package:red_crescent/src/feature/tasks/task_datails/widget/task_details_screen.dart';
 import 'package:red_crescent/src/feature/tasks/widget/tasks_screen.dart';
 
 class TasksCard extends StatelessWidget {

@@ -5,4 +5,6 @@ abstract final class StorageKey {
   /// {@macro storage_key}
 
   static const access = 'access';
+  static const refresh = 'refresh';
+
 }

@@ -33,20 +33,48 @@ class Access {
       };
 }
 
+class RefreshTokenResponse {
+  final String access;
+  final String refresh;
+
+  RefreshTokenResponse({
+    required this.access,
+    required this.refresh,
+  });
+
+  factory RefreshTokenResponse.fromJson(Map<String, dynamic> json) => RefreshTokenResponse(
+    access: json["access"],
+    refresh: json["refresh"],
+  );
+}
+
+extension AccessExtension on Access {
+  Access copyWith({
+    String? access,
+    String? refresh,
+    User? user,
+  }) {
+    return Access(
+      access: access ?? this.access,
+      refresh: refresh ?? this.refresh,
+      user: user ?? this.user,
+    );
+  }
+}
+
 class User {
   final int id;
   final String username;
   final String email;
-  final bool isStaff;
-  final bool isActive;
+  final bool? isActive;
   final String? profilePictureUrl;
-  final String firstName;
-  final String lastName;
+  final String? firstName;
+  final String? lastName;
   final String? gender;
   final String? role;
   final String? phoneNumber;
   final double totalHours;
-  final int xpPoints;
+  final int? xpPoints;
   final String? dateJoined;
   final List<Achievement> achievements;
 
@@ -54,15 +82,14 @@ class User {
     required this.id,
     required this.username,
     required this.email,
-    required this.isStaff,
-    required this.isActive,
-    required this.firstName,
-    required this.lastName,
+     this.isActive,
+     this.firstName,
+     this.lastName,
     this.gender,
     this.role,
     this.phoneNumber,
     required this.totalHours,
-    required this.xpPoints,
+     this.xpPoints,
     this.profilePictureUrl,
     this.dateJoined,
     required this.achievements,
@@ -72,7 +99,6 @@ class User {
         id: json["id"],
         username: json["username"],
         email: json["email"],
-        isStaff: json["is_staff"],
         isActive: json["is_active"],
         firstName: json["first_name"],
         lastName: json["last_name"],
@@ -93,7 +119,6 @@ class User {
         "id": id,
         "username": username,
         "email": email,
-        "is_staff": isStaff,
         "is_active": isActive,
         "first_name": firstName,
         "last_name": lastName,
@@ -109,7 +134,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, email: $email, isStaff: $isStaff, isActive: $isActive, firstName: $firstName, lastName: $lastName, gender: $gender, role: $role, phoneNumber: $phoneNumber, totalHours: $totalHours, xpPoints: $xpPoints,"profilePictureUrl:" $profilePictureUrl,"date_joined:"$dateJoined),achievements: $achievements';
+    return 'User(id: $id, username: $username, email: $email, isActive: $isActive, firstName: $firstName, lastName: $lastName, gender: $gender, role: $role, phoneNumber: $phoneNumber, totalHours: $totalHours, xpPoints: $xpPoints,"profilePictureUrl:" $profilePictureUrl,"date_joined:"$dateJoined),achievements: $achievements';
   }
 }
 

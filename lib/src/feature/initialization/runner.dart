@@ -15,6 +15,8 @@ import 'package:red_crescent/src/feature/leaderboard/bloc/leaderboard_bloc.dart'
 import 'package:red_crescent/src/feature/leaderboard/data/leaderboard_repository.dart';
 import 'package:red_crescent/src/feature/tasks/bloc/tasks_bloc.dart';
 import 'package:red_crescent/src/feature/tasks/data/task_repository.dart';
+import 'package:red_crescent/src/feature/tasks/task_datails/bloc/tasks_detail_bloc.dart';
+import 'package:red_crescent/src/feature/tasks/task_datails/data/tasks_detail_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:stack_trace/stack_trace.dart';
@@ -73,22 +75,27 @@ abstract final class Runner {
             // --- Dio --- //
 
             RepositoryProvider(
-              create: (context) => Dio(
-                BaseOptions(
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                  },
-                  receiveDataWhenStatusError: true,
-                  // receiveTimeout: const Duration(seconds: 5),
-                  // connectTimeout: const Duration(seconds: 3),
-                  baseUrl: const String.fromEnvironment('BASEURL',
-                      defaultValue: 'https://red-crescent-production.up.railway.app'),
-                ),
-              )..interceptors.addAll(
+              create: (context) {
+              final dio =  Dio(
+                  BaseOptions(
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Accept': 'application/json',
+                    },
+                    receiveDataWhenStatusError: true,
+                    // receiveTimeout: const Duration(seconds: 5),
+                    // connectTimeout: const Duration(seconds: 3),
+                    baseUrl: const String.fromEnvironment('BASEURL',
+                        defaultValue:
+                        'https://red-crescent-production.up.railway.app'),
+                  ),
+                );
+                dio.interceptors.addAll(
                   [
                     TokenInterceptor(
-                        flutterSecureStorage: flutterSecureStorage),
+                      flutterSecureStorage: flutterSecureStorage,
+                      dio: dio,
+                    ),
                     PrettyDioLogger(
                         requestHeader: true,
                         requestBody: true,
@@ -107,7 +114,9 @@ abstract final class Runner {
                           return !args.isResponse || !args.hasUint8ListData;
                         }),
                   ],
-                ),
+                );
+                return dio;
+              }
             ),
 
             // --- Flutter secure storage --- //
@@ -142,9 +151,17 @@ abstract final class Runner {
             ),
             // --- Leaderboard --- //
 
-            // --- Theme --- //
-            RepositoryProvider<TaskRepository>(create: (context) => TaskRepositoryImpl(dio: context.read<Dio>())),
-            // --- Theme --- //
+            // --- TaskRepository --- //
+            RepositoryProvider<TaskRepository>(
+                create: (context) =>
+                    TaskRepositoryImpl(dio: context.read<Dio>())),
+            // --- TaskRepository --- //
+
+            // --- TaskRepository --- //
+            RepositoryProvider<TaskDetailRepository>(
+                create: (context) =>
+                    TaskDetailRepositoryImpl(dio: context.read<Dio>())),
+            // --- TaskRepository --- //
           ],
           child: MultiBlocProvider(
             providers: [
@@ -168,11 +185,17 @@ abstract final class Runner {
                       RepositoryProvider.of<LeaderboardRepository>(context),
                 )..add(GetLeaderboard()),
               ),
-
               BlocProvider<TasksBloc>(
                 create: (context) => TasksBloc(
-                  tasksRepository: RepositoryProvider.of<TaskRepository>(context),
+                  tasksRepository:
+                      RepositoryProvider.of<TaskRepository>(context),
                 )..add(GetTasks(isInitial: true)),
+              ),
+              BlocProvider<TasksDetailBloc>(
+                create: (context) => TasksDetailBloc(
+                  taskDetailRepository:
+                      RepositoryProvider.of<TaskDetailRepository>(context),
+                ),
               ),
             ],
             child: RedCrescent(),

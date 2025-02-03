@@ -17,7 +17,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         super(LoginInitial()) {
     on<LoginEvent>((event, emit) => switch (event) {
           Logged() => _onLogged(event, emit),
-          LogoutRequested() => _onLogoutRequested(event, emit),
         });
   }
 
@@ -50,12 +49,4 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  Future<void> _onLogoutRequested(LogoutRequested event, Emitter<LoginState> emit) async {
-    try {
-      await _authorizationRepository.unAuthorize();
-    } catch(error, stackTrace) {
-      onError(error, stackTrace);
-      rethrow;
-    }
-  }
 }

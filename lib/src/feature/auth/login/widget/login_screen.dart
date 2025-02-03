@@ -63,7 +63,7 @@ class __LoginScreenState extends State<_LoginScreen> {
 
   @override
   void initState() {
-    _loginController = TextEditingController(text: 'Zalkarbro');
+    _loginController = TextEditingController(text: 'Broo');
     _passwordController = TextEditingController(text: 'venvvenvvenv');
     _loginFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
@@ -134,12 +134,8 @@ class __LoginScreenState extends State<_LoginScreen> {
       CustomErrorDialog.show(
         context: context,
         error: state.loginException,
-        onRetry: () {
-          Navigator.of(context).pop();
-        },
-        onHelp: () {
-          Navigator.of(context).pop();
-        },
+        onRetry: () {},
+        onHelp: () {},
       );
     }
   }
